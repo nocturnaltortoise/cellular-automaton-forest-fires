@@ -201,5 +201,28 @@ public class FF2DGrid{
 
 
 
+  // Added by Josh
+  public int computeCellsOnFire() {
+    int onFire = 0;
+
+    for (int i=0; i<size2D[0]; i++) {
+      for (int j=0; j<size2D[1]; j++) {
+        if (cells[i][j].getState()) {
+          onFire ++;
+        }
+      }
+    }
+
+    return onFire;
+  }
+
+  public void printFireStatistics() {
+    int total = size2D[0] + size2D[1];
+    int onFire = computeCellsOnFire();
+    System.out.printf("There are %d/%d cells on fire (%%%d)", onFire, total, (onFire/total)*100);
+  }
+
+
+
 
 }
