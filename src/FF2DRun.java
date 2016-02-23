@@ -238,6 +238,7 @@ public class FF2DRun extends JPanel{        // The code must extend Jpanel in th
         store = cellSet.getStates();                // get the local state array   
         imObj.drawCells(store);                     // call a member function of the imObj object to redraw the graphic image using the stored state array
         frame.getContentPane().repaint();           // call a Jframe member function to repaint the contenPane
+        cellSet.printFireStatistics();
 
         try {                                           // try-catch Exception handling to implement a pause
           Thread.currentThread().sleep(100);             // Sleep 1000= 1 second 
