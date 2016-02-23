@@ -239,6 +239,7 @@ public class FF2DRun extends JPanel{        // The code must extend Jpanel in th
         imObj.drawCells(store);                     // call a member function of the imObj object to redraw the graphic image using the stored state array
         frame.getContentPane().repaint();           // call a Jframe member function to repaint the contenPane
         cellSet.printFireStatistics();
+        cellSet.writeFireStatistics();
 
         try {                                           // try-catch Exception handling to implement a pause
           Thread.currentThread().sleep(100);             // Sleep 1000= 1 second 
@@ -281,7 +282,9 @@ public class FF2DRun extends JPanel{        // The code must extend Jpanel in th
 
         if(i!=gensIn){ cellSet.progressGen(); }
       }
-      outtext.close();                      // close the output text file
+      outtext.close();                     // close the output text file
+      cellSet.closeFile();
+
     } catch (FileNotFoundException e) {     // if output text file could not be opened, report and exit.
       System.err.println("can not open output file");
       System.exit(1);

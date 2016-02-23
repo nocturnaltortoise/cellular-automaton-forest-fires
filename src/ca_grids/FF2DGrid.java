@@ -9,11 +9,15 @@
 
 package ca_grids;                  // assign to the ca_grids package (implications for class dir. structure)
 
-import ca_cells.FF2DCell;         // this class uses the lower level cell class to make an array of cell objects 
+import ca_cells.FF2DCell;         // this class uses the lower level cell class to make an array of cell objects
+
+import java.io.FileWriter;
 
 
 public class FF2DGrid{
- 
+
+  private FileWriter outputFile = null;
+
   //***************************************************************************************
   // Constructor - this initialises an array of cells
   //***************************************************************************************
@@ -23,7 +27,15 @@ public class FF2DGrid{
 
     size2D[0]=xLen;  // FF2DGrid object stores x dimension of cell array
     size2D[1]=yLen;  // FF2DGrid object stores y dimension of cell array
-    genNumber =0;    // genNumber initially set to 0 
+    genNumber =0;    // genNumber initially set to 0
+
+
+    try {
+      outputFile = new FileWriter("graph.csv");
+    }
+    catch (java.io.IOException e) {
+      System.out.println("Couldn't open output file for writing (" + e + ").");
+    }
 
   
     int i;       // local itterators 
@@ -216,11 +228,37 @@ public class FF2DGrid{
     return onFire;
   }
 
+
+
   public void printFireStatistics() {
     int total = size2D[0] * size2D[1];
     int onFire = computeCellsOnFire();
     double percent = ((double)onFire/(double)total)*100.0;
     System.out.printf("There are %d/%d cells on fire (%% %f)\n", onFire, total, percent);
+  }
+
+  public void writeFireStatistics() {
+    int total = size2D[0] * size2D[1];
+    int onFire = computeCellsOnFire();
+    double percent = ((double)onFire/(double)total)*100.0;
+
+    String output = genNumber + "," + onFire + "," + total + "\n";
+    try {
+      outputFile.write(output);
+    }
+    catch (java.io.IOException e) {
+      System.out.println("Couldn't write to file (" + e + ").");
+    }
+
+  }
+
+  public void closeFile() {
+    try {
+      outputFile.close();
+    }
+    catch (java.io.IOException e) {
+      System.out.println("Couldn't close file (" + e + ")");
+    }
   }
 
 
