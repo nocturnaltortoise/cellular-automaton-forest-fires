@@ -75,6 +75,10 @@ public class FF2DCell{           // declare class
         nextState = true;
     }
 
+    if (refactoryIterations > 0) {
+      refactoryIterations--;
+    }
+
     // check if nLiveN =3 to make the cell come alive (true
     return nextState;	                    // pass out the new nextState value
   }
@@ -84,4 +88,6 @@ public class FF2DCell{           // declare class
   //******************************************************************************
 
   private boolean[][] cellState= new boolean[3][3];  // the private 3x3 array of cell and neighbour states
+  private int refactoryPeriod = 20;
+  private int refactoryIterations = 0;
 }
