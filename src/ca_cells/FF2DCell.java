@@ -38,6 +38,14 @@ public class FF2DCell{           // declare class
     return(cellState[1][1]);
   }
 
+  public void setBurntOut(boolean isBurntOut){
+      burntOut = isBurntOut;
+  }
+
+  public boolean getBurntOut(){
+      return burntOut;
+  }
+
   //****************************************************************************
   //  Create a next-state method to encapsulate FF rules and return the 
   //  next generational state for that cell. 
@@ -54,15 +62,13 @@ public class FF2DCell{           // declare class
 
   public boolean nextState(){
 
-    int onFireNeighbours = 0;                        // local to store no. of live neighbour states
-    int i; int j;                        // itterators
-    boolean nextState=cellState[1][1];   // set the default return state to be the unchanged current state 
+    int onFireNeighbours = 0;
+    boolean nextState = cellState[1][1];   // set the default return state to be the unchanged current state
 
-    // count the number of live neighbours
-    // ***NOTE - To change to a von Neumann neighbourhood alter the following set of nested loops.....
+    // count the number of on fire neighbours
     
-    for(i=0;i<3;i++){
-      for(j=0;j<3;j++){
+    for(int i=0;i<3;i++){
+      for(int j=0;j<3;j++){
         if((i!=1)||(j!=1)){              // don't include the current cell state
           if (cellState[i][j]) {
             onFireNeighbours++;
@@ -71,6 +77,7 @@ public class FF2DCell{           // declare class
       }
     }
 
+    // if there are any neighbours on fire, catch fire
     if (onFireNeighbours >= 1) {
         nextState = true;
     }
@@ -79,15 +86,15 @@ public class FF2DCell{           // declare class
       refactoryIterations--;
     }
 
-    // check if nLiveN =3 to make the cell come alive (true
-    return nextState;	                    // pass out the new nextState value
+    return nextState;
   }
 
   //******************************************************************************
   //private components - stores states of cell and all other in its neighborhood
   //******************************************************************************
 
-  private boolean[][] cellState= new boolean[3][3];  // the private 3x3 array of cell and neighbour states
+  private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
   private int refactoryPeriod = 20;
   private int refactoryIterations = 0;
+  private boolean burntOut;
 }
