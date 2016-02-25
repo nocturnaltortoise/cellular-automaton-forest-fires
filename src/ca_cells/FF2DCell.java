@@ -54,7 +54,7 @@ public class FF2DCell{           // declare class
 
   public boolean nextState(){
 
-    int nLiveN=0;                        // local to store no. of live neighbour states
+    int onFireNeighbours = 0;                        // local to store no. of live neighbour states
     int i; int j;                        // itterators
     boolean nextState=cellState[1][1];   // set the default return state to be the unchanged current state 
 
@@ -64,26 +64,19 @@ public class FF2DCell{           // declare class
     for(i=0;i<3;i++){
       for(j=0;j<3;j++){
         if((i!=1)||(j!=1)){              // don't include the current cell state
-          if (cellState[i][j]==true) {
-            nLiveN++ ;
+          if (cellState[i][j]) {
+            onFireNeighbours++;
           }
         }
       }
     }
 
-
-   // Nested Logic to recognise any new state change based on the rules.
-   // ***NOTE - To change life/death rules change the values in the following conditions.....
-
-    if (cellState[1][1]==true){             // if the current cell state is true ....
-      if((nLiveN<2)||(nLiveN>3)) {          // kill the state to false if nLiveN is not 2 or 3 
-        nextState=false; 
-      }
-    } 
-    else {                                  // else if current cell state is false .....
-      if (nLiveN==3) { nextState=true; }    // check if nLiveN =3 to make the cell come alive (true)
+    if (onFireNeighbours >= 1) {
+        nextState = true;
     }
-    return(nextState);	                    // pass out the new nextState value 
+
+    // check if nLiveN =3 to make the cell come alive (true
+    return nextState;	                    // pass out the new nextState value
   }
 
   //******************************************************************************
