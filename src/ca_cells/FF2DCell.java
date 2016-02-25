@@ -16,7 +16,7 @@ public class FF2DCell{           // declare class
 
   public FF2DCell(){       // At construction initialise a 3x3 private state array to all false
     
-    int i; int j;
+    int i; int j;           
 
     for(i=0;i<3;i++){
       for(j=0;j<3;j++){
@@ -54,9 +54,9 @@ public class FF2DCell{           // declare class
 
   public boolean nextState(){
 
-    int nLiveN=0;                        // local to store no. of live neighbour states
+    int onFireNeighbours = 0;                        // local to store no. of live neighbour states
     int i; int j;                        // itterators
-    boolean nextState=cellState[1][1];   // set the default return state to be the unchanged current state
+    boolean nextState=cellState[1][1];   // set the default return state to be the unchanged current state 
 
     // count the number of live neighbours
     // ***NOTE - To change to a von Neumann neighbourhood alter the following set of nested loops.....
@@ -64,49 +64,24 @@ public class FF2DCell{           // declare class
     for(i=0;i<3;i++){
       for(j=0;j<3;j++){
         if((i!=1)||(j!=1)){              // don't include the current cell state
-          if (cellState[i][j]==true) {
-            nLiveN++ ;
+          if (cellState[i][j]) {
+            onFireNeighbours++;
           }
         }
       }
     }
 
-
-   // Nested Logic to recognise any new state change based on the rules.
-   // ***NOTE - To change life/death rules change the values in the following conditions.....
-
-    if (cellState[1][1]==true){             // if the current cell state is true ....
-      if((nLiveN<2)||(nLiveN>3)) {          // kill the state to false if nLiveN is not 2 or 3 
-        nextState=false; 
-      }
-    } 
-    else {                                  // else if current cell state is false .....
-      if (nLiveN==3) { nextState=true; }    // check if nLiveN =3 to make the cell come alive (true)
-      refactoryIterations = refactoryPeriod;
+    if (onFireNeighbours >= 1) {
+        nextState = true;
     }
 
-    // Handling of refactory model START
-
-    // Reduce iteration count
-    if (refactoryIterations > 0) {
-      refactoryIterations--;
-    }
-    else {
-      fuelLevel = 100;
-    }
-
-    return(nextState);	                    // pass out the new nextState value 
+    // check if nLiveN =3 to make the cell come alive (true
+    return nextState;	                    // pass out the new nextState value
   }
-
-  // Handling of refactory model END
-
 
   //******************************************************************************
   //private components - stores states of cell and all other in its neighborhood
   //******************************************************************************
 
   private boolean[][] cellState= new boolean[3][3];  // the private 3x3 array of cell and neighbour states
-  private int refactoryPeriod = 20; // Time taken for fuel resources to regenerate
-  private int refactoryIterations = 0; // Number of iterations left before regenerating (0 when alive)
-  private int fuelLevel = 100; // Amount of fuel a cell has, 0-100
 }

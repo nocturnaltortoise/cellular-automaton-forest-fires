@@ -16,3 +16,6 @@ hs_err_pid*
 out/
 
 OutputImages/
+
+forestFireOutput.txt
+graph.csv
