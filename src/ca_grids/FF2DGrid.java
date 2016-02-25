@@ -214,7 +214,7 @@ public class FF2DGrid{
 
 
   // Added by Josh
-  public int computeCellsOnFire() {
+  private int computeCellsOnFire() {
     int onFire = 0;
 
     for (int i=0; i<size2D[0]; i++) {
