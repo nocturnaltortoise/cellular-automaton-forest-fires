@@ -40,6 +40,7 @@ public class FF2DCell{           // declare class
 
   public void setBurntOut(boolean isBurntOut){
       burntOut = isBurntOut;
+      refactoryIterations = refactoryPeriod;
   }
 
   public boolean getBurntOut(){
