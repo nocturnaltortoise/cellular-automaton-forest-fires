@@ -108,11 +108,18 @@ public class FF2DGrid{
 
     for(int i=0;i<size2D[0];i++) {                            // for each cell array position
       for(int j=0;j<size2D[1];j++) {
-        if(getStates()[i][j] && cells[i][j].getFuelLevel() == 0){
-            cells[i][j].setBurntOut(true);
+//        if(getStates()[i][j] && cells[i][j].getFuelLevel() == 0){
+//        if (!cells[i][j].getState() && cells[i][j].getFuelLevel() == 0) {
+        if (!cells[i][j].getState() && cells[i][j].getFuelLevel() == 0) {
+
+//            cells[i][j].setBurntOut(true);
+          cells[i][j].startRefractory();
         }
 
-        if(getStates()[i][j]){
+//        if(getStates()[i][j]){
+//          cells[i][j].decrementFuelLevel();
+//        }
+        if (cells[i][j].getState()) {
           cells[i][j].decrementFuelLevel();
         }
         store[i][j]=cells[i][j].nextState();              // copy next state to the store array
@@ -240,7 +247,7 @@ public class FF2DGrid{
     int total = size2D[0] * size2D[1];
     int onFire = computeCellsOnFire();
     double percent = ((double)onFire/(double)total)*100.0;
-    System.out.printf("There are %d/%d cells on fire (%% %f)\n", onFire, total, percent);
+    System.out.printf("%di: There are %d/%d cells on fire (%% %f)\n", genNumber, onFire, total, percent);
   }
 
   public void writeFireStatistics() {

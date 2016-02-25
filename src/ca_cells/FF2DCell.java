@@ -38,36 +38,20 @@ public class FF2DCell{           // declare class
     return(cellState[1][1]);
   }
 
-  public void setBurntOut(boolean isBurntOut){
-      burntOut = isBurntOut;
-      if (burntOut) {
-        // If burnt out, start refactory cycle
-        refactoryIterations = refactoryPeriod;
-      }
-  }
+//  public void setBurntOut(boolean isBurntOut){
+//      burntOut = isBurntOut;
+//      if (burntOut) {
+//        // If burnt out, start refactory cycle
+//        refactoryIterations = refactoryPeriod;
+//      }
+//  }
 
-  public boolean getBurntOut(){
-      return burntOut;
+  public void startRefractory() {
+    refactoryIterations = refactoryPeriod;
   }
-
-//  public void incrementOnFireForCount(){
-//      onFireForCount++;
-//  }
-//
-//  public void setOnFireForCount(int updatedCount){
-//      onFireForCount = updatedCount;
-//  }
-//
-//  public int getOnFireForCount(){
-//      return onFireForCount;
-//  }
 
   public int getFuelLevel(){
     return fuelLevel;
-  }
-
-  public void setFuelLevel(int updatedLevel){
-    fuelLevel = updatedLevel;
   }
 
   public void decrementFuelLevel(){
@@ -106,7 +90,7 @@ public class FF2DCell{           // declare class
     }
 
     // if there are any neighbours on fire, catch fire
-    nextState = !burntOut && onFireNeighbours >= 1 && fuelLevel > 0;
+    nextState = onFireNeighbours >= 1 && fuelLevel > 0;
 
     if (refactoryIterations > 0) {
       refactoryIterations--;
@@ -124,9 +108,8 @@ public class FF2DCell{           // declare class
   //******************************************************************************
 
   private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
-  private int refactoryPeriod = 20;
-  private int refactoryIterations = 0;
-  private boolean burntOut = false;
-  private int initFuelLevel = 20;
+  private int refactoryPeriod = 30;
+  private int refactoryIterations = refactoryPeriod;
+  private int initFuelLevel = 2;
   private int fuelLevel = initFuelLevel;
 }
