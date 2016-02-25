@@ -104,16 +104,16 @@ public class FF2DGrid{
 
   public void progressGen(){
 
-    int fuelIterations = 1;
     boolean[][] store=new boolean[size2D[0]][size2D[1]];  // stores a local next state array
 
     for(int i=0;i<size2D[0];i++) {                            // for each cell array position
       for(int j=0;j<size2D[1];j++) {
-        if(getStates()[i][j] && cells[i][j].getOnFireForCount() >= fuelIterations){
+        if(getStates()[i][j] && cells[i][j].getFuelLevel() == 0){
             cells[i][j].setBurntOut(true);
         }
+
         if(getStates()[i][j]){
-          cells[i][j].incrementOnFireForCount();
+          cells[i][j].decrementFuelLevel();
         }
         store[i][j]=cells[i][j].nextState();              // copy next state to the store array
       }

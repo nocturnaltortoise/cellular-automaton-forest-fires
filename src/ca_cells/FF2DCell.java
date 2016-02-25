@@ -47,16 +47,28 @@ public class FF2DCell{           // declare class
       return burntOut;
   }
 
-  public void incrementOnFireForCount(){
-      onFireForCount++;
+//  public void incrementOnFireForCount(){
+//      onFireForCount++;
+//  }
+//
+//  public void setOnFireForCount(int updatedCount){
+//      onFireForCount = updatedCount;
+//  }
+//
+//  public int getOnFireForCount(){
+//      return onFireForCount;
+//  }
+
+  public int getFuelLevel(){
+    return fuelLevel;
   }
 
-  public void setOnFireForCount(int updatedCount){
-      onFireForCount = updatedCount;
+  public void setFuelLevel(int updatedLevel){
+    fuelLevel = updatedLevel;
   }
 
-  public int getOnFireForCount(){
-      return onFireForCount;
+  public void decrementFuelLevel(){
+      fuelLevel--;
   }
 
   //****************************************************************************
@@ -108,5 +120,5 @@ public class FF2DCell{           // declare class
   private int refactoryPeriod = 20;
   private int refactoryIterations = 0;
   private boolean burntOut;
-  private int onFireForCount = 0;
+  private int fuelLevel = 0;
 }
