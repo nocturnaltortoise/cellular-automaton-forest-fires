@@ -40,7 +40,10 @@ public class FF2DCell{           // declare class
 
   public void setBurntOut(boolean isBurntOut){
       burntOut = isBurntOut;
-      refactoryIterations = refactoryPeriod;
+      if (burntOut) {
+        // If burnt out, start refactory cycle
+        refactoryIterations = refactoryPeriod;
+      }
   }
 
   public boolean getBurntOut(){
@@ -108,6 +111,10 @@ public class FF2DCell{           // declare class
     if (refactoryIterations > 0) {
       refactoryIterations--;
     }
+    else {
+      // Refactory period has finished so replenish fuel
+      fuelLevel = initFuelLevel;
+    }
 
     return nextState;
   }
@@ -120,5 +127,6 @@ public class FF2DCell{           // declare class
   private int refactoryPeriod = 20;
   private int refactoryIterations = 0;
   private boolean burntOut;
-  private int fuelLevel = 0;
+  private int initFuelLevel = 20;
+  private int fuelLevel = initFuelLevel;
 }
