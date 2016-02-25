@@ -102,19 +102,25 @@ public class FF2DGrid{
   //         next State data (in store) for debugging....
 
 
-  public void progressGen(){ 
+  public void progressGen(){
 
-    int i; int j;                                         // local itterators
+    int fuelIterations = 1;
     boolean[][] store=new boolean[size2D[0]][size2D[1]];  // stores a local next state array
 
-    for(i=0;i<size2D[0];i++) {                            // for each cell array position
-      for(j=0;j<size2D[1];j++) { 
+    for(int i=0;i<size2D[0];i++) {                            // for each cell array position
+      for(int j=0;j<size2D[1];j++) {
+        if(getStates()[i][j] && cells[i][j].getOnFireForCount() >= fuelIterations){
+            cells[i][j].setBurntOut(true);
+        }
+        if(getStates()[i][j]){
+          cells[i][j].incrementOnFireForCount();
+        }
         store[i][j]=cells[i][j].nextState();              // copy next state to the store array
       }
     }
 
-    for(i=0;i<size2D[0];i++) {                           // for each cell array position
-      for(j=0;j<size2D[1];j++) { 
+    for(int i=0;i<size2D[0];i++) {                           // for each cell array position
+      for(int j=0;j<size2D[1];j++) {
         cells[i][j].setState(1,1,store[i][j]);           // Use the store array to set all next states 
       }
     }

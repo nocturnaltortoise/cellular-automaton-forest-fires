@@ -46,6 +46,18 @@ public class FF2DCell{           // declare class
       return burntOut;
   }
 
+  public void incrementOnFireForCount(){
+      onFireForCount++;
+  }
+
+  public void setOnFireForCount(int updatedCount){
+      onFireForCount = updatedCount;
+  }
+
+  public int getOnFireForCount(){
+      return onFireForCount;
+  }
+
   //****************************************************************************
   //  Create a next-state method to encapsulate FF rules and return the 
   //  next generational state for that cell. 
@@ -78,9 +90,7 @@ public class FF2DCell{           // declare class
     }
 
     // if there are any neighbours on fire, catch fire
-    if (onFireNeighbours >= 1) {
-        nextState = true;
-    }
+    nextState = !burntOut && onFireNeighbours >= 1;
 
     if (refactoryIterations > 0) {
       refactoryIterations--;
@@ -97,4 +107,5 @@ public class FF2DCell{           // declare class
   private int refactoryPeriod = 20;
   private int refactoryIterations = 0;
   private boolean burntOut;
+  private int onFireForCount = 0;
 }
