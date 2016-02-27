@@ -8,6 +8,9 @@
 
 package ca_cells;                 // assign class to ca_cells package (implications for class dir. structure)
 
+import java.sql.Time;
+import java.util.Random;
+
 public class FF2DCell{           // declare class 
 
   //******************************************************************************  
@@ -103,6 +106,12 @@ public class FF2DCell{           // declare class
     return nextState;
   }
 
+  private boolean shouldCatchFire() {
+    Random ran = new Random(System.currentTimeMillis());
+    float randomNumber = ran.nextFloat();
+    return randomNumber <= catchingFireProbability;
+  }
+
   //******************************************************************************
   //private components - stores states of cell and all other in its neighborhood
   //******************************************************************************
@@ -112,4 +121,5 @@ public class FF2DCell{           // declare class
   private int refactoryIterations = refactoryPeriod;
   private int initFuelLevel = 2;
   private int fuelLevel = initFuelLevel;
+  private float catchingFireProbability = 1;
 }
