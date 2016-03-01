@@ -132,7 +132,7 @@ public class FF2DCell{           // declare class
   private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
   private int refractoryPeriod = 10;
   private int refractoryIterations = refractoryPeriod;
-  private int initFuelLevel = 2;
+  private int initFuelLevel = 30;
   private int fuelLevel = initFuelLevel;
   private double catchingFireProbability = 1;
   private int totalNeighbours = 8;
@@ -144,5 +144,5 @@ public class FF2DCell{           // declare class
   }
 
   // Change the operation mode here:
-  private MODES mode = MODES.REFRACTORY;
+  private MODES mode = MODES.SIMPLE;
 }
