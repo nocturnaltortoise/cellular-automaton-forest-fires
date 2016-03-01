@@ -118,7 +118,7 @@ public class FF2DCell{           // declare class
     double neighbourCatchingFireProbability = 1 / ((totalNeighbours+1) - onFireNeighbours);
     Random ran = new Random(System.currentTimeMillis());
     double randomNumber = ran.nextDouble();
-    return randomNumber <= catchingFireProbability;
+    return randomNumber <= neighbourCatchingFireProbability;
   }
 
   //******************************************************************************
