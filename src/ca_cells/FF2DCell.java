@@ -115,11 +115,9 @@ public class FF2DCell{           // declare class
   }
 
   private boolean shouldCatchFireFromNeighbours() {
-//    double neighbourCatchingFireProbability = ((double)onFireNeighbours) / ((double)totalNeighbours);
+//    double neighbourCatchingFireProbability = ((double)onFireNeighbours+1) / ((double)totalNeighbours);
     double neighbourCatchingFireProbability = 1 / (((double)totalNeighbours+1) - (double)onFireNeighbours);
-//    Random ran = new Random(System.currentTimeMillis());
     double randomNumber = randomGenerator.nextDouble();
-    System.out.println(catchingFireProbability);
     return randomNumber <= neighbourCatchingFireProbability;
   }
 
@@ -130,7 +128,7 @@ public class FF2DCell{           // declare class
   private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
   private int refactoryPeriod = 30;
   private int refactoryIterations = refactoryPeriod;
-  private int initFuelLevel = 2;
+  private int initFuelLevel = 10;
   private int fuelLevel = initFuelLevel;
   private double catchingFireProbability = 1;
   private int totalNeighbours = 8;
