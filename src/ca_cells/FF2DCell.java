@@ -94,7 +94,8 @@ public class FF2DCell{           // declare class
     }
 
     // if there are any neighbours on fire, catch fire
-    nextState = onFireNeighbours >= 1 && fuelLevel > 0;
+//    nextState = onFireNeighbours >= 1 && fuelLevel > 0;
+    nextState = shouldCatchFireFromNeighbours() && fuelLevel > 0;
 
     if (refactoryIterations > 0) {
       refactoryIterations--;
@@ -108,16 +109,18 @@ public class FF2DCell{           // declare class
   }
 
   private boolean shouldCatchFire() {
-    Random ran = new Random(System.currentTimeMillis());
-    double randomNumber = ran.nextDouble();
+//    Random ran = new Random(System.currentTimeMillis());
+    double randomNumber = randomGenerator.nextDouble();
     return randomNumber <= catchingFireProbability;
   }
 
   private boolean shouldCatchFireFromNeighbours() {
 //    double neighbourCatchingFireProbability = onFireNeighbours / totalNeighbours;
     double neighbourCatchingFireProbability = 1 / ((totalNeighbours+1) - onFireNeighbours);
-    Random ran = new Random(System.currentTimeMillis());
-    double randomNumber = ran.nextDouble();
+//    Random ran = new Random(System.currentTimeMillis());
+    double randomNumber = randomGenerator.nextDouble();
+    System.out.println(randomNumber <= neighbourCatchingFireProbability);
+    System.out.println(randomNumber);
     return randomNumber <= neighbourCatchingFireProbability;
   }
 
@@ -133,4 +136,5 @@ public class FF2DCell{           // declare class
   private double catchingFireProbability = 1;
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
+  private Random randomGenerator = new Random(System.currentTimeMillis());
 }
