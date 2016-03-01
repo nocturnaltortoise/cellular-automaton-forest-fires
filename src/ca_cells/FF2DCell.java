@@ -93,23 +93,20 @@ public class FF2DCell{           // declare class
       }
     }
 
-    if ( mode == MODES.SIMPLE ) {
-      nextState = onFireNeighbours >= 1;
-    }
-    if ( mode == MODES.REFRACTORY ) {
-      // if there are any neighbours on fire, catch fire
-      nextState = onFireNeighbours >= 1 && fuelLevel > 0;
-    }
-    else if (mode == MODES.PROBABILISTIC) {
+    if (mode == MODES.PROBABILISTIC) {
       nextState = shouldCatchFireFromNeighbours() && fuelLevel > 0;
     }
-
-    if (refractoryIterations > 0) {
-      refractoryIterations--;
-    }
     else {
-      // Refractory period has finished so replenish fuel
-      fuelLevel = initFuelLevel;
+      nextState = onFireNeighbours >= 1 && fuelLevel > 0;
+    }
+
+    if ( mode != MODES.SIMPLE) {
+      if (refractoryIterations > 0) {
+        refractoryIterations--;
+      } else {
+        // Refractory period has finished so replenish fuel
+        fuelLevel = initFuelLevel;
+      }
     }
 
     return nextState;
@@ -133,9 +130,9 @@ public class FF2DCell{           // declare class
   //******************************************************************************
 
   private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
-  private int refractoryPeriod = 30;
+  private int refractoryPeriod = 10;
   private int refractoryIterations = refractoryPeriod;
-  private int initFuelLevel = 10;
+  private int initFuelLevel = 2;
   private int fuelLevel = initFuelLevel;
   private double catchingFireProbability = 1;
   private int totalNeighbours = 8;
