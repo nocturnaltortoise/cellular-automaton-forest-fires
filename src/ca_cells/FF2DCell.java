@@ -115,9 +115,9 @@ public class FF2DCell{           // declare class
   //******************************************************************************
 
   private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
-  private int refractoryPeriod = 9;
+  private int refractoryPeriod = 0;
   private int refractoryIterations = refractoryPeriod;
-  private int initFuelLevel = 10;
+  private int initFuelLevel = 30;
   private int fuelLevel = initFuelLevel;
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
