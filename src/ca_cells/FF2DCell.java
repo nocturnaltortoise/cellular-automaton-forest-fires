@@ -50,6 +50,7 @@ public class FF2DCell{           // declare class
 //  }
 
   public void startRefractory() {
+    inRefractory = true;
     refractoryIterations = refractoryPeriod;
   }
 
@@ -66,18 +67,8 @@ public class FF2DCell{           // declare class
   //  next generational state for that cell. 
   //****************************************************************************
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Conways Game of Life Rules:
-//
-// 1. DECISION METRIC -Sum all live neighbours.
-// 2. KILLING RULE    -If live, and nLiveNeighbors is not 2 or 3 then next state changes to dead.
-// 3. LIVING RULE     -If dead, and nLiveNeighbors=3 then state changes to live next step. 
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   public boolean nextState(){
 
-//    int onFireNeighbours = 0;
     onFireNeighbours = 0;
     boolean nextState = cellState[1][1];   // set the default return state to be the unchanged current state
 
@@ -101,25 +92,22 @@ public class FF2DCell{           // declare class
     }
 
     if ( mode != MODES.SIMPLE) {
-      if (refractoryIterations > 0) {
-        refractoryIterations--;
-      } else {
-        // Refractory period has finished so replenish fuel
-        fuelLevel = initFuelLevel;
+      if (inRefractory) {
+        if (refractoryIterations > 0) {
+          refractoryIterations--;
+        } else {
+          // Refractory period has finished so replenish fuel
+          fuelLevel = initFuelLevel;
+          inRefractory = false;
+        }
       }
     }
-
     return nextState;
   }
 
-  private boolean shouldCatchFire() {
-//    Random ran = new Random(System.currentTimeMillis());
-    double randomNumber = randomGenerator.nextDouble();
-    return randomNumber <= catchingFireProbability;
-  }
 
   public boolean inRefractoryCycle() {
-    return refractoryIterations < refractoryPeriod;
+    return inRefractory;
   }
 
   private boolean shouldCatchFireFromNeighbours() {
@@ -134,14 +122,15 @@ public class FF2DCell{           // declare class
   //******************************************************************************
 
   private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
-  private int refractoryPeriod = 40;
+  private int refractoryPeriod = 9;
   private int refractoryIterations = refractoryPeriod;
-  private int initFuelLevel = 5;
+  private int initFuelLevel = 10;
   private int fuelLevel = initFuelLevel;
   private double catchingFireProbability = 1;
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
   private Random randomGenerator = new Random(System.currentTimeMillis());
+  private boolean inRefractory = false;
 
   private enum MODES {
     SIMPLE, REFRACTORY, PROBABILISTIC;

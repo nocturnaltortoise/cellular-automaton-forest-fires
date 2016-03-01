@@ -118,9 +118,6 @@ public class FF2DGrid{
           }
         }
 
-//        if(getStates()[i][j]){
-//          cells[i][j].decrementFuelLevel();
-//        }
         if (cells[i][j].getState()) {
           cells[i][j].decrementFuelLevel();
         }
