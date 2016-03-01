@@ -44,13 +44,13 @@ public class FF2DCell{           // declare class
 //  public void setBurntOut(boolean isBurntOut){
 //      burntOut = isBurntOut;
 //      if (burntOut) {
-//        // If burnt out, start refactory cycle
-//        refactoryIterations = refactoryPeriod;
+//        // If burnt out, start refractory cycle
+//        refractoryIterations = refractoryPeriod;
 //      }
 //  }
 
   public void startRefractory() {
-    refactoryIterations = refactoryPeriod;
+    refractoryIterations = refractoryPeriod;
   }
 
   public int getFuelLevel(){
@@ -96,7 +96,7 @@ public class FF2DCell{           // declare class
     if ( mode == MODES.SIMPLE ) {
       nextState = onFireNeighbours >= 1;
     }
-    if ( mode == MODES.REFACTORY ) {
+    if ( mode == MODES.REFRACTORY ) {
       // if there are any neighbours on fire, catch fire
       nextState = onFireNeighbours >= 1 && fuelLevel > 0;
     }
@@ -104,11 +104,11 @@ public class FF2DCell{           // declare class
       nextState = shouldCatchFireFromNeighbours() && fuelLevel > 0;
     }
 
-    if (refactoryIterations > 0) {
-      refactoryIterations--;
+    if (refractoryIterations > 0) {
+      refractoryIterations--;
     }
     else {
-      // Refactory period has finished so replenish fuel
+      // Refractory period has finished so replenish fuel
       fuelLevel = initFuelLevel;
     }
 
@@ -133,8 +133,8 @@ public class FF2DCell{           // declare class
   //******************************************************************************
 
   private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
-  private int refactoryPeriod = 30;
-  private int refactoryIterations = refactoryPeriod;
+  private int refractoryPeriod = 30;
+  private int refractoryIterations = refractoryPeriod;
   private int initFuelLevel = 10;
   private int fuelLevel = initFuelLevel;
   private double catchingFireProbability = 1;
@@ -143,9 +143,9 @@ public class FF2DCell{           // declare class
   private Random randomGenerator = new Random(System.currentTimeMillis());
 
   private enum MODES {
-    SIMPLE, REFACTORY, PROBABILISTIC;
+    SIMPLE, REFRACTORY, PROBABILISTIC;
   }
 
   // Change the operation mode here:
-  private MODES mode = MODES.REFACTORY;
+  private MODES mode = MODES.REFRACTORY;
 }
