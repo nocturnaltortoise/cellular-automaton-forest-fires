@@ -108,11 +108,9 @@ public class FF2DGrid{
 
     for(int i=0;i<size2D[0];i++) {                            // for each cell array position
       for(int j=0;j<size2D[1];j++) {
-//        if(getStates()[i][j] && cells[i][j].getFuelLevel() == 0){
-//        if (!cells[i][j].getState() && cells[i][j].getFuelLevel() == 0) {
+
         if (!cells[i][j].getState() && cells[i][j].getFuelLevel() == 0) {
 
-//            cells[i][j].setBurntOut(true);
           if (!cells[i][j].inRefractoryCycle()) {
             cells[i][j].startRefractory();
           }
