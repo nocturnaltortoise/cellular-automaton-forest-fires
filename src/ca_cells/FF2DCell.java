@@ -93,9 +93,16 @@ public class FF2DCell{           // declare class
       }
     }
 
-    // if there are any neighbours on fire, catch fire
-//    nextState = onFireNeighbours >= 1 && fuelLevel > 0;
-    nextState = shouldCatchFireFromNeighbours() && fuelLevel > 0;
+    if ( mode == MODES.SIMPLE ) {
+      nextState = onFireNeighbours >= 1;
+    }
+    if ( mode == MODES.REFACTORY ) {
+      // if there are any neighbours on fire, catch fire
+      nextState = onFireNeighbours >= 1 && fuelLevel > 0;
+    }
+    else if (mode == MODES.PROBABILISTIC) {
+      nextState = shouldCatchFireFromNeighbours() && fuelLevel > 0;
+    }
 
     if (refactoryIterations > 0) {
       refactoryIterations--;
@@ -134,4 +141,11 @@ public class FF2DCell{           // declare class
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
   private Random randomGenerator = new Random(System.currentTimeMillis());
+
+  private enum MODES {
+    SIMPLE, REFACTORY, PROBABILISTIC;
+  }
+
+  // Change the operation mode here:
+  private MODES mode = MODES.REFACTORY;
 }
