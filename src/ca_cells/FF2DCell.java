@@ -41,13 +41,6 @@ public class FF2DCell{           // declare class
     return(cellState[1][1]);
   }
 
-//  public void setBurntOut(boolean isBurntOut){
-//      burntOut = isBurntOut;
-//      if (burntOut) {
-//        // If burnt out, start refractory cycle
-//        refractoryIterations = refractoryPeriod;
-//      }
-//  }
 
   public void startRefractory() {
     inRefractory = true;
@@ -126,7 +119,6 @@ public class FF2DCell{           // declare class
   private int refractoryIterations = refractoryPeriod;
   private int initFuelLevel = 10;
   private int fuelLevel = initFuelLevel;
-  private double catchingFireProbability = 1;
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
   private Random randomGenerator = new Random(System.currentTimeMillis());
