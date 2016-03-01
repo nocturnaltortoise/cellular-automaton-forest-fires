@@ -77,7 +77,8 @@ public class FF2DCell{           // declare class
 
   public boolean nextState(){
 
-    int onFireNeighbours = 0;
+//    int onFireNeighbours = 0;
+    onFireNeighbours = 0;
     boolean nextState = cellState[1][1];   // set the default return state to be the unchanged current state
 
     // count the number of on fire neighbours
@@ -112,6 +113,14 @@ public class FF2DCell{           // declare class
     return randomNumber <= catchingFireProbability;
   }
 
+  private boolean shouldCatchFireFromNeighbours() {
+//    float neighbourCatchingFireProbability = onFireNeighbours / totalNeighbours;
+    float neighbourCatchingFireProbability = 1 / ((totalNeighbours+1) - onFireNeighbours);
+    Random ran = new Random(System.currentTimeMillis());
+    float randomNumber = ran.nextFloat();
+    return randomNumber <= catchingFireProbability;
+  }
+
   //******************************************************************************
   //private components - stores states of cell and all other in its neighborhood
   //******************************************************************************
@@ -122,4 +131,6 @@ public class FF2DCell{           // declare class
   private int initFuelLevel = 2;
   private int fuelLevel = initFuelLevel;
   private float catchingFireProbability = 1;
+  private int totalNeighbours = 8;
+  private int onFireNeighbours = 0;
 }
