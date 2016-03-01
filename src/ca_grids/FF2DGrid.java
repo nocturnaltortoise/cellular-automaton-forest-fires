@@ -113,7 +113,9 @@ public class FF2DGrid{
         if (!cells[i][j].getState() && cells[i][j].getFuelLevel() == 0) {
 
 //            cells[i][j].setBurntOut(true);
-          cells[i][j].startRefractory();
+          if (!cells[i][j].inRefractoryCycle()) {
+            cells[i][j].startRefractory();
+          }
         }
 
 //        if(getStates()[i][j]){

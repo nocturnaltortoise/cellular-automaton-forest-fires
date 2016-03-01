@@ -118,6 +118,10 @@ public class FF2DCell{           // declare class
     return randomNumber <= catchingFireProbability;
   }
 
+  public boolean inRefractoryCycle() {
+    return refractoryIterations < refractoryPeriod;
+  }
+
   private boolean shouldCatchFireFromNeighbours() {
 //    double neighbourCatchingFireProbability = ((double)onFireNeighbours+1) / ((double)totalNeighbours);
     double neighbourCatchingFireProbability = 1 / (((double)totalNeighbours+1) - (double)onFireNeighbours);
@@ -130,9 +134,9 @@ public class FF2DCell{           // declare class
   //******************************************************************************
 
   private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
-  private int refractoryPeriod = 10;
+  private int refractoryPeriod = 40;
   private int refractoryIterations = refractoryPeriod;
-  private int initFuelLevel = 30;
+  private int initFuelLevel = 5;
   private int fuelLevel = initFuelLevel;
   private double catchingFireProbability = 1;
   private int totalNeighbours = 8;
@@ -144,5 +148,5 @@ public class FF2DCell{           // declare class
   }
 
   // Change the operation mode here:
-  private MODES mode = MODES.SIMPLE;
+  private MODES mode = MODES.REFRACTORY;
 }
