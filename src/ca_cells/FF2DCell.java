@@ -43,8 +43,10 @@ public class FF2DCell{           // declare class
 
 
   public void startRefractory() {
-    inRefractory = true;
-    refractoryIterations = refractoryPeriod;
+    if (mode != MODES.SIMPLE) {
+      inRefractory = true;
+      refractoryIterations = refractoryPeriod;
+    }
   }
 
   public int getFuelLevel(){
@@ -129,5 +131,5 @@ public class FF2DCell{           // declare class
   }
 
   // Change the operation mode here:
-  private MODES mode = MODES.REFRACTORY;
+  private MODES mode = MODES.SIMPLE;
 }
