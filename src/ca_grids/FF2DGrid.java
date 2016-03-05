@@ -109,13 +109,12 @@ public class FF2DGrid{
     for(int i=0;i<size2D[0];i++) {                            // for each cell array position
       for(int j=0;j<size2D[1];j++) {
 
-        if (cells[i][j].getFuelLevel() == 0) {
-
-          if (!cells[i][j].inRefractoryCycle()) {
+        // If fuel level reaches 0 and not already inRefactoryCycle, startRefactory
+        if (cells[i][j].getFuelLevel() == 0 && !cells[i][j].inRefractoryCycle()) {
             cells[i][j].startRefractory();
-          }
         }
 
+        // If cell is not dead, reduce fuel level to simulate burning
         if (cells[i][j].getState()) {
           cells[i][j].decrementFuelLevel();
         }
@@ -223,7 +222,7 @@ public class FF2DGrid{
 
 
 
-  // Added by Josh
+  // Compute number of cells currently on fire
   private int computeCellsOnFire() {
     int onFire = 0;
 
@@ -239,7 +238,7 @@ public class FF2DGrid{
   }
 
 
-
+  // Calculates burning statistics and prints them on screen
   public void printFireStatistics() {
     int total = size2D[0] * size2D[1];
     int onFire = computeCellsOnFire();
@@ -247,10 +246,10 @@ public class FF2DGrid{
     System.out.printf("%di: There are %d/%d cells on fire (%% %f)\n", genNumber, onFire, total, percent);
   }
 
+  // Writes proportion of cells on fire at each iteration to CSV file
   public void writeFireStatistics() {
     int total = size2D[0] * size2D[1];
     int onFire = computeCellsOnFire();
-    double percent = ((double)onFire/(double)total)*100.0;
 
     String output = genNumber + "," + onFire + "," + total + "\n";
     try {
