@@ -215,7 +215,7 @@ public class FF2DRun extends JPanel{        // The code must extend Jpanel in th
     JFrame frame = new JFrame();                                          // call constructor for a new JFrame container
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 // set standard close funtionality
     frame.setSize(1024,768);                                              // set initial Frame size - this will change!
-    frame.setTitle("John Conways Game Of Life Cellular Automata");        // set Title of Frame
+    frame.setTitle("Forest Fires Cellular Automata");        // set Title of Frame
     frame.setVisible(true);                                               // set visible (it appears!)
     frame.getContentPane().add(new FF2DRun());                           // tell the frame to add the contentPane (this actions the
                                                                           // paint function described at the top of this main class)

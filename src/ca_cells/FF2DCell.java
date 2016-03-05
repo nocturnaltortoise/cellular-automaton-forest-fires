@@ -8,7 +8,6 @@
 
 package ca_cells;                 // assign class to ca_cells package (implications for class dir. structure)
 
-import java.sql.Time;
 import java.util.Random;
 
 public class FF2DCell{           // declare class 
