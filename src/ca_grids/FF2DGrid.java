@@ -115,7 +115,7 @@ public class FF2DGrid{
         }
 
         // If cell is not dead, reduce fuel level to simulate burning
-        if (cells[i][j].getState()) {
+        if (cells[i][j].getState() && (genNumber % fuelDecrementInterval == 0)) {
           cells[i][j].decrementFuelLevel();
         }
         store[i][j]=cells[i][j].nextState();              // copy next state to the store array
@@ -270,7 +270,6 @@ public class FF2DGrid{
     }
   }
 
-
-
-
+  // Decrement fuel every n turns
+  private int fuelDecrementInterval = 1;
 }
