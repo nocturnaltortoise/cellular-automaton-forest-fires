@@ -49,6 +49,19 @@ public class FF2DCell{           // declare class
     }
   }
 
+  // Carry out next step in refractory process
+  public void refractoryStep() {
+    if (inRefractory) {
+      if (refractoryIterations > 1) {
+        refractoryIterations--;
+      } else {
+        // Refractory period has finished so replenish fuel
+        fuelLevel = initFuelLevel;
+        inRefractory = false;
+      }
+    }
+  }
+
   public int getFuelLevel(){
     return fuelLevel;
   }
@@ -79,24 +92,20 @@ public class FF2DCell{           // declare class
       }
     }
 
-    if (mode == MODES.PROBABILISTIC) {
-      nextState = shouldCatchFireFromNeighbours() && fuelLevel > 0;
-    }
-    else {
-      nextState = onFireNeighbours >= 1 && fuelLevel > 0;
+    switch (mode) {
+      case SIMPLE:
+        nextState = shouldCatchFire();
+        break;
+      case REFRACTORY:
+        refractoryStep();
+        nextState = shouldCatchFire();
+        break;
+      case PROBABILISTIC:
+        refractoryStep();
+        nextState = shouldCatchFireFromNeighbours() && fuelLevel > 0;
+        break;
     }
 
-    if ( mode != MODES.SIMPLE) {
-      if (inRefractory) {
-        if (refractoryIterations > 1) {
-          refractoryIterations--;
-        } else {
-          // Refractory period has finished so replenish fuel
-          fuelLevel = initFuelLevel;
-          inRefractory = false;
-        }
-      }
-    }
     return nextState;
   }
 
@@ -105,8 +114,11 @@ public class FF2DCell{           // declare class
     return inRefractory;
   }
 
+  private boolean shouldCatchFire() {
+    return onFireNeighbours >= 1 && fuelLevel > 0;
+  }
+
   private boolean shouldCatchFireFromNeighbours() {
-//    double neighbourCatchingFireProbability = ((double)onFireNeighbours+1) / ((double)totalNeighbours);
     double neighbourCatchingFireProbability = 1 / (((double)totalNeighbours+1) - (double)onFireNeighbours);
     double randomNumber = randomGenerator.nextDouble();
     return randomNumber <= neighbourCatchingFireProbability;
