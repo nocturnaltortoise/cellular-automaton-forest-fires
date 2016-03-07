@@ -40,12 +40,13 @@ public class FF2DCellState {
     public Color getColour() {
         switch (cellState) {
             case ALIVE:
-                return Color.WHITE;
+                return Color.RED;
             case EXCITABLE:
                 return Color.GREEN;
             case REFRACTORY:
                 double rValue = ((double)(refractoryTotal - refractoryIterations) / (double)refractoryTotal) * 255;
-                Color c = new Color((int)rValue, 0, 0);
+//                Color c = new Color((int)rValue, 0, 0);
+                Color c = new Color(0, (int)rValue, 0);
                 return c;
             case DEAD:
                 return Color.BLACK;

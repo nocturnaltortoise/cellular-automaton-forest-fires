@@ -135,7 +135,7 @@ public class FF2DCell{           // declare class
     }
 
 
-    if ( cellState.getState() == FF2DCellState.CELL_STATE.ALIVE ) System.out.println(cellState.getState());
+    if ( cellState.getState() == FF2DCellState.CELL_STATE.REFRACTORY ) System.out.println(fuelLevel);
     return nextState;
   }
 
@@ -168,8 +168,10 @@ public class FF2DCell{           // declare class
   private int refractoryIterations = refractoryPeriod;
   private Random randomGenerator = new Random(System.currentTimeMillis());
   private int maxFuelLevel = 10;
-  private int initFuelLevel = randomGenerator.nextInt(maxFuelLevel);
-//  to disable random generation, change initFuelLevel to a value like 30 or 50
+//  private int initFuelLevel = randomGenerator.nextInt(maxFuelLevel);
+  private int initFuelLevel = 5;
+
+  //  to disable random generation, change initFuelLevel to a value like 30 or 50
   private int fuelLevel = initFuelLevel;
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
@@ -181,5 +183,5 @@ public class FF2DCell{           // declare class
   }
 
   // Change the operation mode here:
-  private MODES mode = MODES.REFRACTORY;
+  private MODES mode = MODES.PROBABILISTIC;
 }
