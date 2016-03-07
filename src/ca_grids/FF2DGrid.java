@@ -18,6 +18,7 @@ import java.util.Random;
 
 public class FF2DGrid{
 
+  private Random randomGenerator = new Random(System.currentTimeMillis());
   private FileWriter outputFile = null;
 
   //***************************************************************************************
@@ -31,6 +32,13 @@ public class FF2DGrid{
     size2D[1]=yLen;  // FF2DGrid object stores y dimension of cell array
     genNumber =0;    // genNumber initially set to 0
 
+    int seedPoints[][] = new int[6][6];
+
+    for(int i = 0; i < seedPoints.length; i++){
+      seedPoints[i] = new int [2];
+      seedPoints[i][0] = randomGenerator.nextInt(size2D[0]);
+      seedPoints[i][1] = randomGenerator.nextInt(size2D[1]);
+    }
 
     try {
       outputFile = new FileWriter("graph.csv");
@@ -46,7 +54,7 @@ public class FF2DGrid{
     cells= new FF2DCell[size2D[0]][size2D[1]];     // initialise the array of cell objects
     for(i=0;i<size2D[0];i++){                       
       for(j=0;j<size2D[1];j++)  { 
-        cells[i][j]=new FF2DCell();                // call the constructor for each instance of the cell class
+        cells[i][j]=new FF2DCell(i,j);                // call the constructor for each instance of the cell class
 //        cells[i][j].setFuelLevel(randomGenerator.nextInt(maxFuelLevel));
       }  
     }
@@ -194,14 +202,14 @@ public class FF2DGrid{
       }
     }
 
-    for(i=0;i<size2D[0];i++){ 
-      nMap[i+1][0]          = cells[i][size2D[1]-1].getState();   // set y =-1 and y= max+1 local array wrapping boundary states 
-      nMap[i+1][size2D[1]+1]= cells[i][0          ].getState();   // 
+    for(i=0;i<size2D[0];i++){
+      nMap[i+1][0]          = cells[i][size2D[1]-1].getState();   // set y =-1 and y= max+1 local array wrapping boundary states
+      nMap[i+1][size2D[1]+1]= cells[i][0          ].getState();   //
 
     }
-    for(i=0;i<size2D[1];i++){ 
-      nMap[0          ][i+1]= cells[size2D[0]-1][i].getState();   // set x =-1 and x= max+1 local array wrapping boundary states 
-      nMap[size2D[0]+1][i+1]= cells[0          ][i].getState();  
+    for(i=0;i<size2D[1];i++){
+      nMap[0          ][i+1]= cells[size2D[0]-1][i].getState();   // set x =-1 and x= max+1 local array wrapping boundary states
+      nMap[size2D[0]+1][i+1]= cells[0          ][i].getState();
     }
 
     nMap[0          ][0          ]= cells[size2D[0]-1][size2D[1]-1].getState();  // set local array corner wrapping boundary states
@@ -209,7 +217,7 @@ public class FF2DGrid{
     nMap[size2D[0]+1][0          ]= cells[0          ][size2D[1]-1].getState();
     nMap[0          ][size2D[1]+1]= cells[size2D[0]-1][0          ].getState();
 
-/*    // for absorbant BCs (all edges set to false)....
+/*    for absorbant BCs (all edges set to false)....
 
     for(i=0;i<size2D[0];i++){ nMap[i+1][0  ]= false; nMap[i+1        ][size2D[1]+1]= false; }
     for(i=0;i<size2D[1];i++){ nMap[0  ][i+1]= false; nMap[size2D[0]+1][i+1        ]= false; }
@@ -287,5 +295,4 @@ public class FF2DGrid{
   // Decrement fuel every n turns
   private int maxFuelLevel = 30;
   private int fuelDecrementInterval = 1;
-  private Random randomGenerator = new Random(System.currentTimeMillis());
 }

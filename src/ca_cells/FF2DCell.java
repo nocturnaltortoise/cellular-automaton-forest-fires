@@ -16,8 +16,11 @@ public class FF2DCell{           // declare class
   //  Constructor - initialise all private state varibles  to false (zero) state 
   //******************************************************************************
 
-  public FF2DCell(){       // At construction initialise a 3x3 private state array to all false
-    
+  public FF2DCell(int x, int y){       // At construction initialise a 3x3 private state array to all false
+
+    this.xPos = x;
+    this.yPos = y;
+
     int i; int j;           
 
     for(i=0;i<3;i++){
@@ -168,13 +171,14 @@ public class FF2DCell{           // declare class
   private int refractoryIterations = refractoryPeriod;
   private Random randomGenerator = new Random(System.currentTimeMillis());
   private int maxFuelLevel = 10;
-//  private int initFuelLevel = randomGenerator.nextInt(maxFuelLevel);
-  private int initFuelLevel = 5;
-
-  //  to disable random generation, change initFuelLevel to a value like 30 or 50
+  // initFuelLevel = findNearestSeedPoint(this.xPos, this.yPos, seedPoints).getInitFuelLevel();
+  private int initFuelLevel = randomGenerator.nextInt(maxFuelLevel);
+//  to disable random generation, change initFuelLevel to a value like 30 or 50
   private int fuelLevel = initFuelLevel;
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
+  private int xPos;
+  private int yPos;
 
   private FF2DCellState cellState = new FF2DCellState();
 
