@@ -132,7 +132,8 @@ public class FF2DCell{           // declare class
   }
 
   private boolean shouldCatchFireFromNeighbours() {
-    double neighbourCatchingFireProbability = 1 / (((double)totalNeighbours+1) - (double)onFireNeighbours);
+    double neighbourCatchingFireProbability = ((double)onFireNeighbours / (double)totalNeighbours) * 1.5;
+//    double neighbourCatchingFireProbability = 1 / (((double)totalNeighbours+1) - (double)onFireNeighbours);
     double randomNumber = randomGenerator.nextDouble();
     return randomNumber <= neighbourCatchingFireProbability;
   }
@@ -147,6 +148,7 @@ public class FF2DCell{           // declare class
   private Random randomGenerator = new Random(System.currentTimeMillis());
   private int maxFuelLevel = 10;
   private int initFuelLevel = randomGenerator.nextInt(maxFuelLevel);
+//  to disable random generation, change initFuelLevel to a value like 30 or 50
   private int fuelLevel = initFuelLevel;
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
@@ -159,5 +161,5 @@ public class FF2DCell{           // declare class
   }
 
   // Change the operation mode here:
-  private MODES mode = MODES.REFRACTORY;
+  private MODES mode = MODES.PROBABILISTIC;
 }
