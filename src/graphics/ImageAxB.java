@@ -6,6 +6,9 @@
 
 package graphics;                     // declare class to be in the graphics package (implications for class dir. structure)
 
+import ca_cells.FF2DCell;
+import ca_cells.FF2DCellState;
+
 import java.awt.Graphics;             // import all supporting java graphics and io classes
 import java.awt.Image;
 import java.awt.Color;
@@ -49,7 +52,21 @@ public class ImageAxB{                                       // declare class
         }
       }
     }
-  }  
+  }
+
+  public void drawCells(FF2DCellState[][] statesIn) {
+    int i;    int j;  // itterators
+
+    Graphics g = myBufferedImage.getGraphics();    // create a graphics context of the BufferedImage object
+
+    for (i=0 ;i<statesIn[0].length;i++){           // for each true CA state array position....
+      for(j=0;j<statesIn.length   ;j++){
+        g.setColor(statesIn[j][i].getColour());
+        g.fill3DRect(((j*imUnit[0])),((i*imUnit[1])),(imUnit[0]),(imUnit[1]),true);
+      }
+    }
+  }
+
   //**********************************************************************
   // drawCells Memeber function- takes a boolean CA state array and 
   // draws "true" state rectangles on a graphics context of the classes 

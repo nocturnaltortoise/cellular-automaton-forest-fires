@@ -22,7 +22,7 @@ public class FF2DCell{           // declare class
 
     for(i=0;i<3;i++){
       for(j=0;j<3;j++){
-        cellState[i][j]=false;
+        neighbourStates[i][j]=false;
       }
     }
   }
@@ -33,11 +33,11 @@ public class FF2DCell{           // declare class
   //******************************************************************************************
 
   public void setState(int xPos, int yPos, boolean setStateIn){    // set a state in the 3x3 state array
-    cellState[xPos][yPos]=setStateIn;
+    neighbourStates[xPos][yPos]=setStateIn;
   }
 
   public boolean getState(){                              // return the cell state (pos 1,1 of private state array)
-    return(cellState[1][1]);
+    return(neighbourStates[1][1]);
   }
 
   public void setFuelLevel(int newFuelLevel){
@@ -46,6 +46,7 @@ public class FF2DCell{           // declare class
 
   public void startRefractory() {
     if (mode != MODES.SIMPLE) {
+      cellState.setState(FF2DCellState.CELL_STATE.REFRACTORY);
       inRefractory = true;
       refractoryIterations = refractoryPeriod;
     }
@@ -56,10 +57,12 @@ public class FF2DCell{           // declare class
     if (inRefractory) {
       if (refractoryIterations > 1) {
         refractoryIterations--;
+        cellState.setState(refractoryIterations, refractoryPeriod);
       } else {
         // Refractory period has finished so replenish fuel
         fuelLevel = initFuelLevel;
         inRefractory = false;
+        cellState.setState(FF2DCellState.CELL_STATE.EXCITABLE);
       }
     }
   }
@@ -80,14 +83,14 @@ public class FF2DCell{           // declare class
   public boolean nextState(){
 
     onFireNeighbours = 0;
-    boolean nextState = cellState[1][1];   // set the default return state to be the unchanged current state
+    boolean nextState = neighbourStates[1][1];   // set the default return state to be the unchanged current state
 
     // count the number of on fire neighbours
     
     for(int i=0;i<3;i++){
       for(int j=0;j<3;j++){
         if((i!=1)||(j!=1)){              // don't include the current cell state
-          if (cellState[i][j]) {
+          if (neighbourStates[i][j]) {
             onFireNeighbours++;
           }
         }
@@ -108,12 +111,20 @@ public class FF2DCell{           // declare class
         break;
     }
 
+    if (nextState) {
+      cellState.setState(FF2DCellState.CELL_STATE.ALIVE);
+    }
+
     return nextState;
   }
 
 
   public boolean inRefractoryCycle() {
     return inRefractory;
+  }
+
+  public FF2DCellState getCellState() {
+    return cellState;
   }
 
   private boolean shouldCatchFire() {
@@ -130,8 +141,8 @@ public class FF2DCell{           // declare class
   //private components - stores states of cell and all other in its neighborhood
   //******************************************************************************
 
-  private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
-  private int refractoryPeriod = 1;
+  private boolean[][] neighbourStates = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
+  private int refractoryPeriod = 20;
   private int refractoryIterations = refractoryPeriod;
   private Random randomGenerator = new Random(System.currentTimeMillis());
   private int maxFuelLevel = 10;
@@ -140,6 +151,8 @@ public class FF2DCell{           // declare class
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
   private boolean inRefractory = false;
+
+  private FF2DCellState cellState = new FF2DCellState();
 
   private enum MODES {
     SIMPLE, REFRACTORY, PROBABILISTIC
