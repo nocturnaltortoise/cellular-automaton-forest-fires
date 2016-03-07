@@ -40,6 +40,9 @@ public class FF2DCell{           // declare class
     return(cellState[1][1]);
   }
 
+  public void setFuelLevel(int newFuelLevel){
+    initFuelLevel = newFuelLevel;
+  }
 
   public void startRefractory() {
     if (mode != MODES.SIMPLE) {
@@ -130,15 +133,16 @@ public class FF2DCell{           // declare class
   private boolean[][] cellState = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
   private int refractoryPeriod = 1;
   private int refractoryIterations = refractoryPeriod;
-  private int initFuelLevel = 30;
+  private Random randomGenerator = new Random(System.currentTimeMillis());
+  private int maxFuelLevel = 10;
+  private int initFuelLevel = randomGenerator.nextInt(maxFuelLevel);
   private int fuelLevel = initFuelLevel;
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
-  private Random randomGenerator = new Random(System.currentTimeMillis());
   private boolean inRefractory = false;
 
   private enum MODES {
-    SIMPLE, REFRACTORY, PROBABILISTIC;
+    SIMPLE, REFRACTORY, PROBABILISTIC
   }
 
   // Change the operation mode here:

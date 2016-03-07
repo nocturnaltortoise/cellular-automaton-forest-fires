@@ -12,6 +12,7 @@ package ca_grids;                  // assign to the ca_grids package (implicatio
 import ca_cells.FF2DCell;         // this class uses the lower level cell class to make an array of cell objects
 
 import java.io.FileWriter;
+import java.util.Random;
 
 
 public class FF2DGrid{
@@ -45,6 +46,7 @@ public class FF2DGrid{
     for(i=0;i<size2D[0];i++){                       
       for(j=0;j<size2D[1];j++)  { 
         cells[i][j]=new FF2DCell();                // call the constructor for each instance of the cell class
+//        cells[i][j].setFuelLevel(randomGenerator.nextInt(maxFuelLevel));
       }  
     }
 
@@ -272,5 +274,7 @@ public class FF2DGrid{
   }
 
   // Decrement fuel every n turns
+  private int maxFuelLevel = 30;
   private int fuelDecrementInterval = 1;
+  private Random randomGenerator = new Random(System.currentTimeMillis());
 }
