@@ -19,7 +19,11 @@ public class FF2DCellState {
         cellState = state;
     }
 
-    public void setState(int refractoryIterations, int refractoryTotal) {
+    public CELL_STATE getState() {
+        return cellState;
+    }
+
+    public void setRefractory(int refractoryIterations, int refractoryTotal) {
         this.refractoryIterations = refractoryIterations;
         this.refractoryTotal = refractoryTotal;
     }
@@ -36,7 +40,7 @@ public class FF2DCellState {
     public Color getColour() {
         switch (cellState) {
             case ALIVE:
-                return Color.YELLOW;
+                return Color.WHITE;
             case EXCITABLE:
                 return Color.GREEN;
             case REFRACTORY:

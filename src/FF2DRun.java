@@ -251,7 +251,7 @@ public class FF2DRun extends JPanel{        // The code must extend Jpanel in th
         cellSet.writeFireStatistics();
 
         try {                                           // try-catch Exception handling to implement a pause
-          Thread.currentThread().sleep(100);             // Sleep 1000= 1 second
+          Thread.currentThread().sleep(20);             // Sleep 1000= 1 second
         }
         catch (InterruptedException e) {                // if error trace
           e.printStackTrace();
