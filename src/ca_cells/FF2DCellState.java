@@ -36,7 +36,7 @@ public class FF2DCellState {
     public Color getColour() {
         switch (cellState) {
             case ALIVE:
-                return Color.WHITE;
+                return Color.YELLOW;
             case EXCITABLE:
                 return Color.GREEN;
             case REFRACTORY:
