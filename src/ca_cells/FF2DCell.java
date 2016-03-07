@@ -54,6 +54,7 @@ public class FF2DCell{           // declare class
     if (inRefractory) {
       if (refractoryIterations > 1) {
         refractoryIterations--;
+        cellState.setState(refractoryIterations, refractoryPeriod);
       } else {
         // Refractory period has finished so replenish fuel
         fuelLevel = initFuelLevel;

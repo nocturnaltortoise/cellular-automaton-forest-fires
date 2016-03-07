@@ -19,11 +19,19 @@ public class FF2DCellState {
         cellState = state;
     }
 
+    public void setState(int refractoryIterations, int refractoryTotal) {
+        this.refractoryIterations = refractoryIterations;
+        this.refractoryTotal = refractoryTotal;
+    }
+
     public enum CELL_STATE {
         EXCITABLE, ALIVE, REFRACTORY;
     }
 
     private CELL_STATE cellState;
+
+    private int refractoryIterations;
+    private int refractoryTotal;
 
     public Color getColour() {
         switch (cellState) {
@@ -32,7 +40,9 @@ public class FF2DCellState {
             case EXCITABLE:
                 return Color.GREEN;
             case REFRACTORY:
-                return Color.PINK;
+                double rValue = ((double)(refractoryTotal - refractoryIterations) / (double)refractoryTotal) * 255;
+                Color c = new Color((int)rValue, 0, 0);
+                return c;
             default:
                 return Color.BLACK;
         }
