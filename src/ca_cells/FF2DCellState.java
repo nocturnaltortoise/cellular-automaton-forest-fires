@@ -6,8 +6,21 @@ import java.awt.*;
  * Created by joshua on 07/03/16.
  */
 public class FF2DCellState {
+
+    public FF2DCellState() {
+        cellState = CELL_STATE.EXCITABLE;
+    }
+
+    public FF2DCellState(CELL_STATE state) {
+        cellState = state;
+    }
+
+    public void setState(CELL_STATE state) {
+        cellState = state;
+    }
+
     public enum CELL_STATE {
-        ALIVE, DEAD, REFRACTORY;
+        EXCITABLE, ALIVE, REFRACTORY;
     }
 
     private CELL_STATE cellState;
@@ -16,10 +29,10 @@ public class FF2DCellState {
         switch (cellState) {
             case ALIVE:
                 return Color.WHITE;
-            case DEAD:
-                return Color.BLACK;
+            case EXCITABLE:
+                return Color.GREEN;
             case REFRACTORY:
-                return Color.GRAY;
+                return Color.PINK;
             default:
                 return Color.BLACK;
         }

@@ -21,7 +21,8 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 
                                              // import all our other classes used by this Main Class 
-import ca_grids.FF2DGrid;                  
+import ca_cells.FF2DCellState;
+import ca_grids.FF2DGrid;
 import ca_cells.FF2DCell;
 import graphics.ImageAxB;
 
@@ -167,6 +168,12 @@ public class FF2DRun extends JPanel{        // The code must extend Jpanel in th
     //****************************************************************************
 
     boolean[][] store = new boolean[xSizeIn][ySizeIn];   // local used to store cell array states
+    FF2DCellState[][] colourStore = new FF2DCellState[ySizeIn][xSizeIn];
+    for (int row=0; row<ySizeIn; row++) {
+      for (int col=0; col<xSizeIn; col++) {
+        colourStore[row][col] = new FF2DCellState();
+      }
+    }
 
     FF2DGrid cellSet = new FF2DGrid(xSizeIn,ySizeIn);  // call constructor for the FF2DGrid class object now we know dimensions
   
@@ -235,8 +242,10 @@ public class FF2DRun extends JPanel{        // The code must extend Jpanel in th
     
       for(i=0;i<=gensIn;i++){                       // itterate through generations
 
-        store = cellSet.getStates();                // get the local state array   
-        imObj.drawCells(store);                     // call a member function of the imObj object to redraw the graphic image using the stored state array
+        store = cellSet.getStates();                // get the local state array
+        colourStore = cellSet.getFF2DStates();
+//        imObj.drawCells(store);                     // call a member function of the imObj object to redraw the graphic image using the stored state array
+        imObj.drawCells(colourStore);
         frame.getContentPane().repaint();           // call a Jframe member function to repaint the contenPane
         cellSet.printFireStatistics();
         cellSet.writeFireStatistics();

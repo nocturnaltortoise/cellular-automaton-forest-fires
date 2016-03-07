@@ -10,6 +10,7 @@
 package ca_grids;                  // assign to the ca_grids package (implications for class dir. structure)
 
 import ca_cells.FF2DCell;         // this class uses the lower level cell class to make an array of cell objects
+import ca_cells.FF2DCellState;
 
 import java.io.FileWriter;
 
@@ -150,6 +151,16 @@ public class FF2DGrid{
     }
     return(store);       // return the local stae array store
 
+  }
+
+  public FF2DCellState[][] getFF2DStates() {
+    int i; int j;                                         // local itterators
+    FF2DCellState[][] store=new FF2DCellState[size2D[0]][size2D[1]];  // local array of states
+
+    for(i=0;i<size2D[0];i++) {
+      for(j=0;j<size2D[1];j++) { store[i][j]=cells[i][j].getCellState(); }   // for all array positions copy array staes to the local state array
+    }
+    return(store);
   }
   //***************************
   //Private components:
