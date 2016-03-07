@@ -29,7 +29,7 @@ public class FF2DCellState {
     }
 
     public enum CELL_STATE {
-        EXCITABLE, ALIVE, REFRACTORY;
+        EXCITABLE, ALIVE, REFRACTORY, DEAD;
     }
 
     private CELL_STATE cellState;
@@ -47,6 +47,8 @@ public class FF2DCellState {
                 double rValue = ((double)(refractoryTotal - refractoryIterations) / (double)refractoryTotal) * 255;
                 Color c = new Color((int)rValue, 0, 0);
                 return c;
+            case DEAD:
+                return Color.BLACK;
             default:
                 return Color.BLACK;
         }

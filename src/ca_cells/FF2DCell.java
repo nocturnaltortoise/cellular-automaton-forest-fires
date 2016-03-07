@@ -104,6 +104,11 @@ public class FF2DCell{           // declare class
         else {
           nextState = fuelLevel > 0;
         }
+
+        if (!nextState) {
+          cellState.setState(FF2DCellState.CELL_STATE.DEAD);
+        }
+
         break;
       case REFRACTORY:
         refractoryStep();
@@ -176,5 +181,5 @@ public class FF2DCell{           // declare class
   }
 
   // Change the operation mode here:
-  private MODES mode = MODES.PROBABILISTIC;
+  private MODES mode = MODES.REFRACTORY;
 }
