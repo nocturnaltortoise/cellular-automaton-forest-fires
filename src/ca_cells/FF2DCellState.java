@@ -44,9 +44,9 @@ public class FF2DCellState {
             case EXCITABLE:
                 return Color.GREEN;
             case REFRACTORY:
-                double rValue = ((double)(refractoryTotal - refractoryIterations) / (double)refractoryTotal) * 255;
-//                Color c = new Color((int)rValue, 0, 0);
-                Color c = new Color(0, (int)rValue, 0);
+                // Compute colouring (shade of green) based on number of iterations left before refractory process is finished
+                double gValue = ((double)(refractoryTotal - refractoryIterations) / (double)refractoryTotal) * 255;
+                Color c = new Color(0, (int)gValue, 0);
                 return c;
             case DEAD:
                 return Color.BLACK;

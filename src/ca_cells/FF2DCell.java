@@ -33,7 +33,7 @@ public class FF2DCell{           // declare class
       }
     }
 
-    // If initial fuel level is 0, set cell state to dead so that it can never start again (prevent alternating)
+    // If initial fuel level is 0, set cell state to dead so that it can never start again (prevent alternating between refractory)
     if (initFuelLevel == 0) {
       cellState.setState(FF2DCellState.CELL_STATE.DEAD);
     }
@@ -53,7 +53,6 @@ public class FF2DCell{           // declare class
   }
 
   public void setCellState(FF2DCellState state) {
-    System.out.println("set");
     this.cellState = state;
   }
 
@@ -62,6 +61,7 @@ public class FF2DCell{           // declare class
   }
 
   public void startRefractory() {
+    // If the cell is not dead (i.e. impossible for it to ever catch fire), start refractory process
     if ( cellState.getState() != FF2DCellState.CELL_STATE.DEAD) {
       cellState.setState(FF2DCellState.CELL_STATE.REFRACTORY);
       refractoryIterations = refractoryPeriod;
@@ -73,11 +73,11 @@ public class FF2DCell{           // declare class
     if (cellState.getState() == FF2DCellState.CELL_STATE.REFRACTORY) {
       if (refractoryIterations > 1) {
         refractoryIterations--;
+        // Tell the state (used for colouring) how many iterations are left
         cellState.setRefractory(refractoryIterations, refractoryPeriod);
       } else {
         // Refractory period has finished so replenish fuel
         fuelLevel = initFuelLevel;
-//        inRefractory = false;
         cellState.setState(FF2DCellState.CELL_STATE.EXCITABLE);
       }
     }
@@ -113,15 +113,17 @@ public class FF2DCell{           // declare class
       }
     }
 
+    // Carry out refractory process, if in probabilistic
     if ( mode != MODES.SIMPLE ) {
       refractoryStep();
     }
 
-    System.out.println(cellState.getState());
 
+    // If cell is already alive, next state is just determined by fuel level
     if ( cellState.getState() == FF2DCellState.CELL_STATE.ALIVE) {
       nextState = fuelLevel > 0;
     }
+    // Otherwise, see if it can catch fire based on neighbours and fuel level
     else {
       switch (mode) {
         case SIMPLE:
@@ -157,9 +159,9 @@ public class FF2DCell{           // declare class
   }
 
   private boolean shouldCatchFireFromNeighbours() {
-//    double neighbourCatchingFireProbability = ((double)onFireNeighbours / (double)totalNeighbours);
     double neighbourCatchingFireProbability;
 
+    // Only have a probability of catching fire if some neighbours are on fire
     if(onFireNeighbours == 0){
       neighbourCatchingFireProbability = 0;
     }else {
@@ -178,7 +180,6 @@ public class FF2DCell{           // declare class
   private int refractoryPeriod = 30;
   private int refractoryIterations = refractoryPeriod;
   private Random randomGenerator = new Random(System.currentTimeMillis());
-  private int maxFuelLevel = 30;
   private int initFuelLevel;
 //  private int initFuelLevel = randomGenerator.nextInt(maxFuelLevel);
 
