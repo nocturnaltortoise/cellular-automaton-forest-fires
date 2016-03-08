@@ -28,6 +28,11 @@ public class FF2DCell{           // declare class
         neighbourStates[i][j]=false;
       }
     }
+
+    // If initial fuel level is 0, set cell state to dead so that it can never start again (prevent alternating)
+    if (initFuelLevel == 0) {
+      cellState.setState(FF2DCellState.CELL_STATE.DEAD);
+    }
   }
   
   //******************************************************************************************
@@ -48,7 +53,7 @@ public class FF2DCell{           // declare class
   }
 
   public void startRefractory() {
-    if (mode != MODES.SIMPLE) {
+    if ( cellState.getState() != FF2DCellState.CELL_STATE.DEAD) {
       cellState.setState(FF2DCellState.CELL_STATE.REFRACTORY);
       refractoryIterations = refractoryPeriod;
     }
@@ -118,7 +123,7 @@ public class FF2DCell{           // declare class
         if (cellState.getState() == FF2DCellState.CELL_STATE.ALIVE) {
           nextState = fuelLevel > 0;
         }
-        else {
+        else if (cellState.getState() != FF2DCellState.CELL_STATE.DEAD){
           nextState = shouldCatchFire() && fuelLevel > 0;
         }
         break;
@@ -127,7 +132,7 @@ public class FF2DCell{           // declare class
         if (cellState.getState() == FF2DCellState.CELL_STATE.ALIVE) {
           nextState = fuelLevel > 0;
         }
-        else {
+        else if (cellState.getState() != FF2DCellState.CELL_STATE.DEAD){
           nextState = shouldCatchFireFromNeighbours() && fuelLevel > 0;
         }
         break;
