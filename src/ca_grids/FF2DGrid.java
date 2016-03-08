@@ -46,7 +46,7 @@ public class FF2DGrid{
       seedPoints[i] = new int [3];
       seedPoints[i][0] = randomGenerator.nextInt(size2D[0]) + lastSeedPointX;
       seedPoints[i][1] = randomGenerator.nextInt(size2D[1]) + lastSeedPointY;
-      seedPoints[i][2] = randomGenerator.nextInt(maxFuelLevel * 2);
+      seedPoints[i][2] = randomGenerator.nextInt(maxFuelLevel * 5);
       lastSeedPointX = seedPoints[i][0];
       lastSeedPointY = seedPoints[i][1];
     }

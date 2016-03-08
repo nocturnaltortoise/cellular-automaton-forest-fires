@@ -150,11 +150,16 @@ public class FF2DCell{           // declare class
   }
 
   private boolean shouldCatchFireFromNeighbours() {
-    double neighbourCatchingFireProbability = ((double)onFireNeighbours / (double)totalNeighbours) * 1.5;
-//    double neighbourCatchingFireProbability = 1 / (((double)totalNeighbours+1) - (double)onFireNeighbours);
-//    double neighbourCatchingFireProbability = 1 / ((double)totalNeighbours + 1) - (double)onFireNeighbours;
+//    double neighbourCatchingFireProbability = ((double)onFireNeighbours / (double)totalNeighbours);
+    double neighbourCatchingFireProbability;
+
+    if(onFireNeighbours == 0){
+      neighbourCatchingFireProbability = 0;
+    }else {
+      neighbourCatchingFireProbability = 1 / (((double) totalNeighbours + 1) - (double) onFireNeighbours);
+    }
+
     double randomNumber = randomGenerator.nextDouble();
-//    double threshold = 0.5;
     return randomNumber <= neighbourCatchingFireProbability;
   }
 
