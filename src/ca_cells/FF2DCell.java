@@ -104,46 +104,31 @@ public class FF2DCell{           // declare class
       }
     }
 
-    switch (mode) {
-      case SIMPLE:
-        if ( cellState.getState() != FF2DCellState.CELL_STATE.ALIVE) {
+    if ( mode != MODES.SIMPLE ) {
+      refractoryStep();
+    }
+
+    if ( cellState.getState() == FF2DCellState.CELL_STATE.ALIVE) {
+      nextState = fuelLevel > 0;
+    }
+    else {
+      switch (mode) {
+        case SIMPLE:
           nextState = shouldCatchFire();
-        }
-        else {
-          nextState = fuelLevel > 0;
-        }
-
-        if (!nextState) {
-          cellState.setState(FF2DCellState.CELL_STATE.DEAD);
-        }
-
-        break;
-      case REFRACTORY:
-        refractoryStep();
-        if (cellState.getState() == FF2DCellState.CELL_STATE.ALIVE) {
-          nextState = fuelLevel > 0;
-        }
-        else if (cellState.getState() != FF2DCellState.CELL_STATE.DEAD){
+          break;
+        case REFRACTORY:
           nextState = shouldCatchFire() && fuelLevel > 0;
-        }
-        break;
-      case PROBABILISTIC:
-        refractoryStep();
-        if (cellState.getState() == FF2DCellState.CELL_STATE.ALIVE) {
-          nextState = fuelLevel > 0;
-        }
-        else if (cellState.getState() != FF2DCellState.CELL_STATE.DEAD){
+          break;
+        case PROBABILISTIC:
           nextState = shouldCatchFireFromNeighbours() && fuelLevel > 0;
-        }
-        break;
+          break;
+      }
     }
 
     if (nextState) {
       cellState.setState(FF2DCellState.CELL_STATE.ALIVE);
     }
 
-
-    if ( cellState.getState() == FF2DCellState.CELL_STATE.REFRACTORY ) System.out.println(fuelLevel);
     return nextState;
   }
 
@@ -192,5 +177,5 @@ public class FF2DCell{           // declare class
   }
 
   // Change the operation mode here:
-  private MODES mode = MODES.PROBABILISTIC;
+  private MODES mode = MODES.REFRACTORY;
 }

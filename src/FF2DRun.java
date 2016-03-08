@@ -27,6 +27,7 @@ import ca_cells.FF2DCell;
 import graphics.ImageAxB;
 
 
+
 public class FF2DRun extends JPanel{        // The code must extend Jpanel in the declaration
 
   public void paint(Graphics g) {            // This class describes what the Jpanel should do to paint itself
@@ -300,6 +301,8 @@ public class FF2DRun extends JPanel{        // The code must extend Jpanel in th
     }
 
   }
+
+
   private static boolean writeFlag = false;                 //  This is set true to allow image and textfile write...
   private static ImageAxB imObj = new ImageAxB(1024,768);   //  This stores a private instance of an ImageAXB object..
 }                                                           //  this is accessed by in this main class to be repainted onto 
