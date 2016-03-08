@@ -181,9 +181,7 @@ public class FF2DCell{           // declare class
   private int refractoryIterations = refractoryPeriod;
   private Random randomGenerator = new Random(System.currentTimeMillis());
   private int initFuelLevel;
-//  private int initFuelLevel = randomGenerator.nextInt(maxFuelLevel);
 
-//  to disable random generation, change initFuelLevel to a value like 30 or 50
   private int fuelLevel;
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
