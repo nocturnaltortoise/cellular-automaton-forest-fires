@@ -20,6 +20,7 @@ public class FF2DGrid{
 
   private Random randomGenerator = new Random(System.currentTimeMillis());
   private FileWriter outputFile = null;
+  public static int seedPoints[][] = new int[10][3];
 
   //***************************************************************************************
   // Constructor - this initialises an array of cells
@@ -32,12 +33,28 @@ public class FF2DGrid{
     size2D[1]=yLen;  // FF2DGrid object stores y dimension of cell array
     genNumber =0;    // genNumber initially set to 0
 
-    int seedPoints[][] = new int[6][6];
+    seedPoints[0][0] = randomGenerator.nextInt(size2D[0]);
+    seedPoints[0][1] = randomGenerator.nextInt(size2D[1]);
+    seedPoints[0][2] = randomGenerator.nextInt(maxFuelLevel * 5);
+
+    System.out.println("" + seedPoints[0][0] + ", " + seedPoints[0][1] + ", " + seedPoints[0][2]);
+
+    int lastSeedPointX = seedPoints[0][0];
+    int lastSeedPointY = seedPoints[0][1];
 
     for(int i = 0; i < seedPoints.length; i++){
-      seedPoints[i] = new int [2];
-      seedPoints[i][0] = randomGenerator.nextInt(size2D[0]);
-      seedPoints[i][1] = randomGenerator.nextInt(size2D[1]);
+      seedPoints[i] = new int [3];
+      seedPoints[i][0] = randomGenerator.nextInt(size2D[0]) + lastSeedPointX;
+      seedPoints[i][1] = randomGenerator.nextInt(size2D[1]) + lastSeedPointY;
+      seedPoints[i][2] = randomGenerator.nextInt(maxFuelLevel * 2);
+      lastSeedPointX = seedPoints[i][0];
+      lastSeedPointY = seedPoints[i][1];
+    }
+
+    for(int[] coords : seedPoints){
+      for(int coord : coords){
+        System.out.println(coord);
+      }
     }
 
     try {
@@ -47,13 +64,9 @@ public class FF2DGrid{
       System.out.println("Couldn't open output file for writing (" + e + ").");
     }
 
-  
-    int i;       // local itterators 
-    int j;
-
     cells= new FF2DCell[size2D[0]][size2D[1]];     // initialise the array of cell objects
-    for(i=0;i<size2D[0];i++){                       
-      for(j=0;j<size2D[1];j++)  { 
+    for(int i=0;i<size2D[0];i++){
+      for(int j=0;j<size2D[1];j++)  {
         cells[i][j]=new FF2DCell(i,j);                // call the constructor for each instance of the cell class
 //        cells[i][j].setFuelLevel(randomGenerator.nextInt(maxFuelLevel));
       }  
@@ -61,17 +74,35 @@ public class FF2DGrid{
 
   }
 
+  public static int[] findNearestSeedPoint(int x, int y, int[][] seedPoints){
+
+    double bestDistance = 100000;
+    int[] bestPoint = new int [3];
+
+    for(int[] point : seedPoints){
+      int xDist = Math.abs(x - point[0]);
+      int yDist = Math.abs(y - point[1]);
+      double euclideanDist = Math.sqrt(Math.pow((double)xDist, 2) + Math.pow((double)yDist, 2));
+      if(euclideanDist < bestDistance){
+        bestDistance = euclideanDist;
+        bestPoint = point;
+      }
+    }
+
+    return bestPoint;
+  }
+
+
   //******************************************************************************************************************
   // Random initialisation using a %set threshold with a random number generator to choose initial state for each bit
   //******************************************************************************************************************
   
   public void setGridRandom(int percentIn){  
 
-    int i; int j;          // local itterators
     double randomNum;      // local stores a random number from Math.random() function
         
-    for(i=0;i<size2D[0];i++){
-      for(j=0;j<size2D[1];j++){ 
+    for(int i=0;i<size2D[0];i++){
+      for(int j=0;j<size2D[1];j++){
         randomNum=100 * Math.random();
 
 	if(randomNum<percentIn) {         // if the random number is less than the threshold passed in ...
@@ -90,10 +121,8 @@ public class FF2DGrid{
   
   public void setGridPassed(boolean setVals[][])  {    // pass in a 2d array of booleans (set states)
 
-    int i; int j;   // local itterators
-
-    for(i=0;i<size2D[0];i++){                       // for each cell array......      
-      for(j=0;j<size2D[1];j++)  { 
+    for(int i=0;i<size2D[0];i++){                       // for each cell array......
+      for(int j=0;j<size2D[1];j++)  {
         cells[i][j].setState(1,1,setVals[i][j]);    // set the cell state array center point (the state of the cell)
       }                                             // to the state of the coresponding position in the passed-in array 
     }
@@ -152,23 +181,21 @@ public class FF2DGrid{
   //********************************************************************************
 
   public boolean[][] getStates(){
-  
-    int i; int j;                                         // local itterators
+
     boolean[][] store=new boolean[size2D[0]][size2D[1]];  // local array of states 
 
-    for(i=0;i<size2D[0];i++) { 
-      for(j=0;j<size2D[1];j++) { store[i][j]=cells[i][j].getState(); }   // for all array positions copy array staes to the local state array
+    for(int i=0;i<size2D[0];i++) {
+      for(int j=0;j<size2D[1];j++) { store[i][j]=cells[i][j].getState(); }   // for all array positions copy array staes to the local state array
     }
     return(store);       // return the local stae array store
 
   }
 
   public FF2DCellState[][] getFF2DStates() {
-    int i; int j;                                         // local itterators
     FF2DCellState[][] store=new FF2DCellState[size2D[0]][size2D[1]];  // local array of states
 
-    for(i=0;i<size2D[0];i++) {
-      for(j=0;j<size2D[1];j++) { store[i][j]=cells[i][j].getCellState(); }   // for all array positions copy array staes to the local state array
+    for(int i=0;i<size2D[0];i++) {
+      for(int j=0;j<size2D[1];j++) { store[i][j]=cells[i][j].getCellState(); }   // for all array positions copy array staes to the local state array
     }
     return(store);
   }

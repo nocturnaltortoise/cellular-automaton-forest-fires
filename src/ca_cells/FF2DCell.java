@@ -8,23 +8,27 @@
 
 package ca_cells;                 // assign class to ca_cells package (implications for class dir. structure)
 
+import ca_grids.FF2DGrid;
+
 import java.util.Random;
 
 public class FF2DCell{           // declare class 
 
   //******************************************************************************  
-  //  Constructor - initialise all private state varibles  to false (zero) state 
+  //  Constructor - initialise all private state variables  to false (zero) state
   //******************************************************************************
 
   public FF2DCell(int x, int y){       // At construction initialise a 3x3 private state array to all false
 
     this.xPos = x;
     this.yPos = y;
+    //uncomment this to turn on random terrain generation
+//    initFuelLevel = FF2DGrid.findNearestSeedPoint(this.xPos, this.yPos, FF2DGrid.seedPoints)[2];
+    initFuelLevel = 30;
+    fuelLevel = initFuelLevel;
 
-    int i; int j;           
-
-    for(i=0;i<3;i++){
-      for(j=0;j<3;j++){
+    for(int i=0;i<3;i++){
+      for(int j=0;j<3;j++){
         neighbourStates[i][j]=false;
       }
     }
@@ -148,7 +152,9 @@ public class FF2DCell{           // declare class
   private boolean shouldCatchFireFromNeighbours() {
     double neighbourCatchingFireProbability = ((double)onFireNeighbours / (double)totalNeighbours) * 1.5;
 //    double neighbourCatchingFireProbability = 1 / (((double)totalNeighbours+1) - (double)onFireNeighbours);
+//    double neighbourCatchingFireProbability = 1 / ((double)totalNeighbours + 1) - (double)onFireNeighbours;
     double randomNumber = randomGenerator.nextDouble();
+//    double threshold = 0.5;
     return randomNumber <= neighbourCatchingFireProbability;
   }
 
@@ -157,14 +163,15 @@ public class FF2DCell{           // declare class
   //******************************************************************************
 
   private boolean[][] neighbourStates = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
-  private int refractoryPeriod = 20;
+  private int refractoryPeriod = 30;
   private int refractoryIterations = refractoryPeriod;
   private Random randomGenerator = new Random(System.currentTimeMillis());
-  private int maxFuelLevel = 10;
-  // initFuelLevel = findNearestSeedPoint(this.xPos, this.yPos, seedPoints).getInitFuelLevel();
-  private int initFuelLevel = randomGenerator.nextInt(maxFuelLevel);
+  private int maxFuelLevel = 30;
+  private int initFuelLevel;
+//  private int initFuelLevel = randomGenerator.nextInt(maxFuelLevel);
+
 //  to disable random generation, change initFuelLevel to a value like 30 or 50
-  private int fuelLevel = initFuelLevel;
+  private int fuelLevel;
   private int totalNeighbours = 8;
   private int onFireNeighbours = 0;
   private int xPos;
@@ -177,5 +184,5 @@ public class FF2DCell{           // declare class
   }
 
   // Change the operation mode here:
-  private MODES mode = MODES.REFRACTORY;
+  private MODES mode = MODES.PROBABILISTIC;
 }
