@@ -165,6 +165,10 @@ public class FF2DCell{           // declare class
     if(onFireNeighbours == 0){
       neighbourCatchingFireProbability = 0;
     }else {
+      // 1 - e^(-cn), where n is the number of on fire neighbours
+      // Values of constant <0.08 keep the fire going
+//      neighbourCatchingFireProbability = 1 - Math.pow(Math.E, -0.08 * onFireNeighbours);
+//      neighbourCatchingFireProbability = (double)onFireNeighbours / totalNeighbours;
       neighbourCatchingFireProbability = 1 / (((double) totalNeighbours + 1) - (double) onFireNeighbours);
     }
 
