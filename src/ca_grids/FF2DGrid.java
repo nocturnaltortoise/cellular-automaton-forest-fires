@@ -72,6 +72,21 @@ public class FF2DGrid{
       }  
     }
 
+
+
+
+
+  }
+
+  // Set up the FF2DCellStates in accordance to initial boolean states
+  public void setupStates() {
+    for (int i=0; i<size2D[0]; i++) {
+      for (int j=0; j<size2D[1]; j++) {
+        if (cells[i][j].getState()) {
+          cells[i][j].setCellState(new FF2DCellState(FF2DCellState.CELL_STATE.ALIVE));
+        }
+      }
+    }
   }
 
   public static int[] findNearestSeedPoint(int x, int y, int[][] seedPoints){

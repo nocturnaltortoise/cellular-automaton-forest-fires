@@ -52,6 +52,11 @@ public class FF2DCell{           // declare class
     return(neighbourStates[1][1]);
   }
 
+  public void setCellState(FF2DCellState state) {
+    System.out.println("set");
+    this.cellState = state;
+  }
+
   public void setFuelLevel(int newFuelLevel){
     initFuelLevel = newFuelLevel;
   }
@@ -111,6 +116,8 @@ public class FF2DCell{           // declare class
     if ( mode != MODES.SIMPLE ) {
       refractoryStep();
     }
+
+    System.out.println(cellState.getState());
 
     if ( cellState.getState() == FF2DCellState.CELL_STATE.ALIVE) {
       nextState = fuelLevel > 0;

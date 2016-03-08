@@ -216,6 +216,8 @@ public class FF2DRun extends JPanel{        // The code must extend Jpanel in th
       cellSet.setGridRandom(initPercent);  // member function for random initialisation
     }
 
+    cellSet.setupStates();
+
     /**********************************/
     /*  create Graphic output frame   */
     /**********************************/
