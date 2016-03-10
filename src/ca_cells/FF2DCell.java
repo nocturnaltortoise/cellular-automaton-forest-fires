@@ -182,7 +182,7 @@ public class FF2DCell{           // declare class
   //******************************************************************************
 
   private boolean[][] neighbourStates = new boolean[3][3];  // the private 3x3 array of cell and neighbour states
-  private int refractoryPeriod = 30;
+  private int refractoryPeriod = 300;
   private int refractoryIterations = refractoryPeriod;
   private Random randomGenerator = new Random(System.currentTimeMillis());
   private int initFuelLevel;

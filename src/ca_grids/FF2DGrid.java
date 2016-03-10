@@ -37,28 +37,19 @@ public class FF2DGrid{
 
     seedPoints[0][0] = randomGenerator.nextInt(size2D[0]);
     seedPoints[0][1] = randomGenerator.nextInt(size2D[1]);
-//    seedPoints[0][2] = randomGenerator.nextInt(maxFuelLevel * 5);
-    seedPoints[0][2] = 0;
+    seedPoints[0][2] = randomGenerator.nextInt(maxFuelLevel);
 
     System.out.println("" + seedPoints[0][0] + ", " + seedPoints[0][1] + ", " + seedPoints[0][2]);
 
-    int lastSeedPointX = seedPoints[0][0];
-    int lastSeedPointY = seedPoints[0][1];
-    int lastSeedPointFuel = seedPoints[0][2];
-
     for(int i = 0; i < seedPoints.length; i++){
       seedPoints[i] = new int [3];
-      seedPoints[i][0] = randomGenerator.nextInt(size2D[0]); //+ lastSeedPointX;
-      seedPoints[i][1] = randomGenerator.nextInt(size2D[1]); //+ lastSeedPointY;
-//      seedPoints[i][2] = lastSeedPointFuel + 10;
+      seedPoints[i][0] = randomGenerator.nextInt(size2D[0]);
+      seedPoints[i][1] = randomGenerator.nextInt(size2D[1]);
       if(i % 3 == 0){
         seedPoints[i][2] = 0;
       }else{
-        seedPoints[i][2] = randomGenerator.nextInt(maxFuelLevel * 5);
+        seedPoints[i][2] = randomGenerator.nextInt(maxFuelLevel);
       }
-//      lastSeedPointFuel = seedPoints[i][2];
-//      lastSeedPointX = seedPoints[i][0];
-//      lastSeedPointY = seedPoints[i][1];
     }
 
     try {
@@ -72,7 +63,6 @@ public class FF2DGrid{
     for(int i=0;i<size2D[0];i++){
       for(int j=0;j<size2D[1];j++)  {
         cells[i][j]=new FF2DCell(i,j);                // call the constructor for each instance of the cell class
-//        cells[i][j].setFuelLevel(randomGenerator.nextInt(maxFuelLevel));
       }  
     }
 
