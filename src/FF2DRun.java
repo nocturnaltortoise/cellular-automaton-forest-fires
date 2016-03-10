@@ -177,7 +177,8 @@ public class FF2DRun extends JPanel{        // The code must extend Jpanel in th
     }
 
     FF2DGrid cellSet = new FF2DGrid(xSizeIn,ySizeIn);  // call constructor for the FF2DGrid class object now we know dimensions
-  
+
+
     //***********************************************************************
     //  If read based initialisation is requested in the command line 
     //   - second read to set the states of the CA cell array 

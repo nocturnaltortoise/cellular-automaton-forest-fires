@@ -76,10 +76,8 @@ public class FF2DGrid{
       }  
     }
 
-
-
-
-
+    // Make sure that seedpoints have correct values in their FF2DCell representation
+    rectifySeedpointCells(cells);
   }
 
   // Set up the FF2DCellStates in accordance to initial boolean states
@@ -109,6 +107,16 @@ public class FF2DGrid{
     }
 
     return bestPoint;
+  }
+
+  public static void rectifySeedpointCells(FF2DCell[][] cells) {
+    for(int[] point : seedPoints) {
+      int x = point[0];
+      int y = point[1];
+      int fuelLevel = point[2];
+      cells[x][y] = new FF2DCell(x, y);
+      cells[x][y].setFuelLevel(fuelLevel);
+    }
   }
 
 
