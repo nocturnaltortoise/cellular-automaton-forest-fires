@@ -106,6 +106,7 @@ public class FF2DGrid{
       int fuelLevel = point[2];
       cells[x][y] = new FF2DCell(x, y);
       cells[x][y].setFuelLevel(fuelLevel);
+      cells[x][y].setCellState(new FF2DCellState(FF2DCellState.CELL_STATE.DEAD));
     }
   }
 
