@@ -89,8 +89,6 @@ public class FF2DGrid{
     seedPoints[0][1] = randomGenerator.nextInt(size2D[1]);
     seedPoints[0][2] = randomGenerator.nextInt(maxFuelLevel);
 
-    System.out.println("" + seedPoints[0][0] + ", " + seedPoints[0][1] + ", " + seedPoints[0][2]);
-
     for(int i = 0; i < seedPoints.length; i++){
       seedPoints[i] = new int [3];
       seedPoints[i][0] = randomGenerator.nextInt(size2D[0]);
