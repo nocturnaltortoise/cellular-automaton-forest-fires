@@ -11,6 +11,7 @@ package ca_grids;                  // assign to the ca_grids package (implicatio
 
 import ca_cells.FF2DCell;         // this class uses the lower level cell class to make an array of cell objects
 import ca_cells.FF2DCellState;
+import ca_cells.FF2DConstants;
 
 import java.io.FileWriter;
 import java.util.Random;
@@ -51,8 +52,10 @@ public class FF2DGrid{
       }  
     }
 
-    // Make sure that seedpoints have correct values in their FF2DCell representation
-    rectifySeedpointCells(cells);
+    if (FF2DConstants.USE_TERRAIN_FUEL_DISTRIBUTION) {
+      // Make sure that seedpoints have correct values in their FF2DCell representation
+      rectifySeedpointCells(cells);
+    }
   }
 
   // Set up the FF2DCellStates in accordance to initial boolean states

@@ -22,10 +22,18 @@ public class FF2DCell{           // declare class
 
     this.xPos = x;
     this.yPos = y;
+
+
     //uncomment this to turn on random terrain generation
-    // finds nearest seedpoint cell and sets this cell to have the same fuel level
-    initFuelLevel = FF2DGrid.findNearestSeedPoint(this.xPos, this.yPos, FF2DGrid.seedPoints)[2];
-//    initFuelLevel = 30;
+
+    if (FF2DConstants.USE_TERRAIN_FUEL_DISTRIBUTION) {
+      // finds nearest seedpoint cell and sets this cell to have the same fuel level
+      initFuelLevel = FF2DGrid.findNearestSeedPoint(this.xPos, this.yPos, FF2DGrid.seedPoints)[2];
+      //    initFuelLevel = 30;
+    }
+    else {
+      initFuelLevel = 30;
+    }
     fuelLevel = initFuelLevel;
 
     for(int i=0;i<3;i++){
@@ -115,7 +123,7 @@ public class FF2DCell{           // declare class
     }
 
     // Carry out refractory process, if in probabilistic
-    if ( mode != MODES.SIMPLE ) {
+    if ( FF2DConstants.mode != FF2DConstants.MODE.SIMPLE ) {
       refractoryStep();
     }
 
@@ -126,7 +134,7 @@ public class FF2DCell{           // declare class
     }
     // Otherwise, see if it can catch fire based on neighbours and fuel level
     else {
-      switch (mode) {
+      switch (FF2DConstants.mode) {
         case SIMPLE:
           nextState = shouldCatchFire();
           break;
@@ -195,10 +203,4 @@ public class FF2DCell{           // declare class
 
   private FF2DCellState cellState = new FF2DCellState();
 
-  private enum MODES {
-    SIMPLE, REFRACTORY, PROBABILISTIC
-  }
-
-  // Change the operation mode here:
-  private MODES mode = MODES.PROBABILISTIC;
 }
