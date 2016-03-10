@@ -249,15 +249,15 @@ public class FF2DGrid{
       nMap[i+1][size2D[1]+1]= cells[i][0          ].getState();   //
 
     }
-    for(i=0;i<size2D[1];i++){
-      nMap[0          ][i+1]= cells[size2D[0]-1][i].getState();   // set x =-1 and x= max+1 local array wrapping boundary states
-      nMap[size2D[0]+1][i+1]= cells[0          ][i].getState();
-    }
-
-    nMap[0          ][0          ]= cells[size2D[0]-1][size2D[1]-1].getState();  // set local array corner wrapping boundary states
-    nMap[size2D[0]+1][size2D[1]+1]= cells[0          ][0          ].getState();
-    nMap[size2D[0]+1][0          ]= cells[0          ][size2D[1]-1].getState();
-    nMap[0          ][size2D[1]+1]= cells[size2D[0]-1][0          ].getState();
+//    for(i=0;i<size2D[1];i++){
+//      nMap[0          ][i+1]= cells[size2D[0]-1][i].getState();   // set x =-1 and x= max+1 local array wrapping boundary states
+//      nMap[size2D[0]+1][i+1]= cells[0          ][i].getState();
+//    }
+//
+//    nMap[0          ][0          ]= cells[size2D[0]-1][size2D[1]-1].getState();  // set local array corner wrapping boundary states
+//    nMap[size2D[0]+1][size2D[1]+1]= cells[0          ][0          ].getState();
+//    nMap[size2D[0]+1][0          ]= cells[0          ][size2D[1]-1].getState();
+//    nMap[0          ][size2D[1]+1]= cells[size2D[0]-1][0          ].getState();
 
 /*    for absorbant BCs (all edges set to false)....
 
