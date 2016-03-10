@@ -35,22 +35,7 @@ public class FF2DGrid{
     size2D[1]=yLen;  // FF2DGrid object stores y dimension of cell array
     genNumber =0;    // genNumber initially set to 0
 
-    seedPoints[0][0] = randomGenerator.nextInt(size2D[0]);
-    seedPoints[0][1] = randomGenerator.nextInt(size2D[1]);
-    seedPoints[0][2] = randomGenerator.nextInt(maxFuelLevel);
-
-    System.out.println("" + seedPoints[0][0] + ", " + seedPoints[0][1] + ", " + seedPoints[0][2]);
-
-    for(int i = 0; i < seedPoints.length; i++){
-      seedPoints[i] = new int [3];
-      seedPoints[i][0] = randomGenerator.nextInt(size2D[0]);
-      seedPoints[i][1] = randomGenerator.nextInt(size2D[1]);
-      if(i % 3 == 0){
-        seedPoints[i][2] = 0;
-      }else{
-        seedPoints[i][2] = randomGenerator.nextInt(maxFuelLevel);
-      }
-    }
+    createSeedPoints(randomGenerator, size2D, maxFuelLevel);
 
     try {
       outputFile = new FileWriter("graph.csv");
@@ -97,6 +82,26 @@ public class FF2DGrid{
     }
 
     return bestPoint;
+  }
+
+  private static void createSeedPoints(Random randomGenerator, int[] size2D, int maxFuelLevel){
+    seedPoints[0][0] = randomGenerator.nextInt(size2D[0]);
+    seedPoints[0][1] = randomGenerator.nextInt(size2D[1]);
+    seedPoints[0][2] = randomGenerator.nextInt(maxFuelLevel);
+
+    System.out.println("" + seedPoints[0][0] + ", " + seedPoints[0][1] + ", " + seedPoints[0][2]);
+
+    for(int i = 0; i < seedPoints.length; i++){
+      seedPoints[i] = new int [3];
+      seedPoints[i][0] = randomGenerator.nextInt(size2D[0]);
+      seedPoints[i][1] = randomGenerator.nextInt(size2D[1]);
+      if(i % 3 == 0){
+        seedPoints[i][2] = 0;
+      }else{
+        seedPoints[i][2] = randomGenerator.nextInt(maxFuelLevel);
+      }
+    }
+
   }
 
   public static void rectifySeedpointCells(FF2DCell[][] cells) {
