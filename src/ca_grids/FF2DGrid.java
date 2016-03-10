@@ -20,6 +20,8 @@ public class FF2DGrid{
 
   private Random randomGenerator = new Random(System.currentTimeMillis());
   private FileWriter outputFile = null;
+  // seedpoints represented as int [seedPoint] [x,y,fuelLevel]
+
   public static int seedPoints[][] = new int[1000][3];
 
   //***************************************************************************************

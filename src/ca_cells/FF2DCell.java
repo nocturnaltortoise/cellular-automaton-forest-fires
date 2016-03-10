@@ -23,6 +23,7 @@ public class FF2DCell{           // declare class
     this.xPos = x;
     this.yPos = y;
     //uncomment this to turn on random terrain generation
+    // finds nearest seedpoint cell and sets this cell to have the same fuel level
     initFuelLevel = FF2DGrid.findNearestSeedPoint(this.xPos, this.yPos, FF2DGrid.seedPoints)[2];
 //    initFuelLevel = 30;
     fuelLevel = initFuelLevel;
