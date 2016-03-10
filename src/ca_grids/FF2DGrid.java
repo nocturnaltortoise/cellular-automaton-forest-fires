@@ -20,7 +20,7 @@ public class FF2DGrid{
 
   private Random randomGenerator = new Random(System.currentTimeMillis());
   private FileWriter outputFile = null;
-  public static int seedPoints[][] = new int[10][3];
+  public static int seedPoints[][] = new int[1000][3];
 
   //***************************************************************************************
   // Constructor - this initialises an array of cells
@@ -35,26 +35,28 @@ public class FF2DGrid{
 
     seedPoints[0][0] = randomGenerator.nextInt(size2D[0]);
     seedPoints[0][1] = randomGenerator.nextInt(size2D[1]);
-    seedPoints[0][2] = randomGenerator.nextInt(maxFuelLevel * 5);
+//    seedPoints[0][2] = randomGenerator.nextInt(maxFuelLevel * 5);
+    seedPoints[0][2] = 0;
 
     System.out.println("" + seedPoints[0][0] + ", " + seedPoints[0][1] + ", " + seedPoints[0][2]);
 
     int lastSeedPointX = seedPoints[0][0];
     int lastSeedPointY = seedPoints[0][1];
+    int lastSeedPointFuel = seedPoints[0][2];
 
     for(int i = 0; i < seedPoints.length; i++){
       seedPoints[i] = new int [3];
-      seedPoints[i][0] = randomGenerator.nextInt(size2D[0]) + lastSeedPointX;
-      seedPoints[i][1] = randomGenerator.nextInt(size2D[1]) + lastSeedPointY;
-      seedPoints[i][2] = randomGenerator.nextInt(maxFuelLevel * 5);
-      lastSeedPointX = seedPoints[i][0];
-      lastSeedPointY = seedPoints[i][1];
-    }
-
-    for(int[] coords : seedPoints){
-      for(int coord : coords){
-        System.out.println(coord);
+      seedPoints[i][0] = randomGenerator.nextInt(size2D[0]); //+ lastSeedPointX;
+      seedPoints[i][1] = randomGenerator.nextInt(size2D[1]); //+ lastSeedPointY;
+//      seedPoints[i][2] = lastSeedPointFuel + 10;
+      if(i % 3 == 0){
+        seedPoints[i][2] = 0;
+      }else{
+        seedPoints[i][2] = randomGenerator.nextInt(maxFuelLevel * 5);
       }
+//      lastSeedPointFuel = seedPoints[i][2];
+//      lastSeedPointX = seedPoints[i][0];
+//      lastSeedPointY = seedPoints[i][1];
     }
 
     try {
@@ -244,20 +246,20 @@ public class FF2DGrid{
       }
     }
 
-    for(i=0;i<size2D[0];i++){
-      nMap[i+1][0]          = cells[i][size2D[1]-1].getState();   // set y =-1 and y= max+1 local array wrapping boundary states
-      nMap[i+1][size2D[1]+1]= cells[i][0          ].getState();   //
-
-    }
-    for(i=0;i<size2D[1];i++){
-      nMap[0          ][i+1]= cells[size2D[0]-1][i].getState();   // set x =-1 and x= max+1 local array wrapping boundary states
-      nMap[size2D[0]+1][i+1]= cells[0          ][i].getState();
-    }
-
-    nMap[0          ][0          ]= cells[size2D[0]-1][size2D[1]-1].getState();  // set local array corner wrapping boundary states
-    nMap[size2D[0]+1][size2D[1]+1]= cells[0          ][0          ].getState();
-    nMap[size2D[0]+1][0          ]= cells[0          ][size2D[1]-1].getState();
-    nMap[0          ][size2D[1]+1]= cells[size2D[0]-1][0          ].getState();
+//    for(i=0;i<size2D[0];i++){
+//      nMap[i+1][0]          = cells[i][size2D[1]-1].getState();   // set y =-1 and y= max+1 local array wrapping boundary states
+//      nMap[i+1][size2D[1]+1]= cells[i][0          ].getState();   //
+//
+//    }
+//    for(i=0;i<size2D[1];i++){
+//      nMap[0          ][i+1]= cells[size2D[0]-1][i].getState();   // set x =-1 and x= max+1 local array wrapping boundary states
+//      nMap[size2D[0]+1][i+1]= cells[0          ][i].getState();
+//    }
+//
+//    nMap[0          ][0          ]= cells[size2D[0]-1][size2D[1]-1].getState();  // set local array corner wrapping boundary states
+//    nMap[size2D[0]+1][size2D[1]+1]= cells[0          ][0          ].getState();
+//    nMap[size2D[0]+1][0          ]= cells[0          ][size2D[1]-1].getState();
+//    nMap[0          ][size2D[1]+1]= cells[size2D[0]-1][0          ].getState();
 
 /*    for absorbant BCs (all edges set to false)....
 
