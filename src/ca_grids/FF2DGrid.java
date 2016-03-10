@@ -245,7 +245,6 @@ public class FF2DGrid{
         nMap[i+1][j+1]= cells[i][j].getState();       // sets to the (1,1) state value of the cells 3x3 state array (which includes neighbours) 
       }
     }
-
 //    for(i=0;i<size2D[0];i++){
 //      nMap[i+1][0]          = cells[i][size2D[1]-1].getState();   // set y =-1 and y= max+1 local array wrapping boundary states
 //      nMap[i+1][size2D[1]+1]= cells[i][0          ].getState();   //
